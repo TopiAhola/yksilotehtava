@@ -117,4 +117,41 @@ async function login(username, password) {
     }
 }
 
+
+//TODO: tämä....
+/**
+ * returns the menu when promise resolves, else returns object with empty array
+ * @param restId
+ * @returns {Promise<{courses: *[]}|{courses: *[]}>}
+ */
+const getDailyMenu = async (restId) => {
+    try {
+        const dailyMenuUrl = "/api/v1/restaurants/daily/:id/:lang";
+        let fetchString = `/api/v1/restaurants/daily/${restId}/en`;
+        console.log("fetch:" + baseUrl + fetchString);
+
+        let response = await fetch(baseUrl + fetchString)
+
+        console.log(response);
+        if (response.ok) {
+            let menu = response.json();
+            console.log("Response ok");
+            console.log(menu);
+            return menu;
+
+        } else {
+            console.log("Response not ok")
+            return {courses: []};
+        }
+
+    } catch (error) {
+        console.log("Error in updateMenu")
+        console.log(error);
+        //return {courses : [] };
+    }
+};
+
+
+
+
 export { updateUser, getUser, login };
