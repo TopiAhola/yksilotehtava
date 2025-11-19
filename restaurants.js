@@ -1,3 +1,5 @@
+'use strict';
+
 const restaurantsPlaceholder = [
   {
     location: {type: 'Point', coordinates: [25.018456, 60.228982]},

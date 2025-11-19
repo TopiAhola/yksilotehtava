@@ -1,0 +1,40 @@
+
+### get restaurants
+GET https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants
+
+### get daily menu https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants/daily/:id/:lang
+GET https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants/daily/:id/:lang
+
+
+### login
+POST https://media2.edu.metropolia.fi/restaurant/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "asdfghj",
+  "password": "password123"
+}
+
+### create user
+POST https://media2.edu.metropolia.fi/restaurant/api/v1/users
+Content-Type: application/json
+
+{
+"username": "asdfghj",
+"password": "password123",
+"email": "asdfghj@example.com"
+}
+
+### get user info
+GET https://media2.edu.metropolia.fi/restaurant/api/v1/users/token/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFzZGZnaGoiLCJlbWFpbCI6ImFzZGZnaGpAZXhhbXBsZS5jb20iLCJfaWQiOiI2OTFkZmRlMDMxMTZhZTI1ZmFjYTdmMzgiLCJyb2xlIjoidXNlciIsImFjdGl2YXRlZCI6dHJ1ZSwiaWF0IjoxNzYzNTc0NzMzfQ.smnBOBhGR6nAG0Kfvn0kFHEXxAqwcKlQmkgmm2NbUKM
+
+### update user
+PUT https://media2.edu.metropolia.fi/restaurant/api/v1/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFzZGZnaGoiLCJlbWFpbCI6ImFzZGZnaGpAZXhhbXBsZS5jb20iLCJfaWQiOiI2OTFkZmRlMDMxMTZhZTI1ZmFjYTdmMzgiLCJyb2xlIjoidXNlciIsImFjdGl2YXRlZCI6dHJ1ZSwiaWF0IjoxNzYzNTc0NzMzfQ.smnBOBhGR6nAG0Kfvn0kFHEXxAqwcKlQmkgmm2NbUKM
+
+{
+    "favouriteRestaurant":"65f37b9fcf627e00930bbd81"
+}

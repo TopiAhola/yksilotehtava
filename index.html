@@ -6,11 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="style.css">
-  <script src="restaurants.js" defer></script>
+  <script src="restaurants.js" type="module" defer></script>
 </head>
 
 <body>
   <h1>Restaurants</h1>
+
+  <div id="login-area">
+      <form id="login-form">
+          <input type="text" name="username" placeholder="Username" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <input type="submit" value="Login">
+      </form>
+  </div>
+
+
   <table>
     <tr>
       <th>Name</th>
@@ -22,6 +32,7 @@
   <dialog>
     <!-- add restaurant info here when restaurant is clicked -->
   </dialog>
+
 </body>
 
 </html>
