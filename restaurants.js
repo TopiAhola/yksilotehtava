@@ -200,7 +200,7 @@ getRestaurants().then(
         createRestElements(value);
         },
     (value)=>{ console.log(value); }
-) ;
+);
 
 function createRestElements(promiseValue){
     console.log("Create restaurant elements");
