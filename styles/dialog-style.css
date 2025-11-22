@@ -1,0 +1,31 @@
+
+#restaurant-dialog {
+  position: absolute;
+  top: 0;
+  margin: auto;
+  background-color: white;
+  border: 4px solid #FF570A;
+  border-radius: 20px 20px 20px 20px;
+
+  width: 90%;
+  height: 100%;
+
+  overflow: hidden;
+}
+
+#restaurant-dialog-menu-area {
+  max-height: 100%;
+  overflow: auto;
+
+}
+
+
+.menuDayHeading {
+  background-color: #5BC0EB;
+  padding: 10px;
+}
+
+
+#restaurant-dialog li {
+  padding: 5px;
+}

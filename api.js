@@ -1,5 +1,7 @@
 'use strict';
 
+import restaurantsPlaceholder from "./placeholder.js";
+
 /**
  * URL: https://media2.edu.metropolia.fi/restaurant
  * @type {string}

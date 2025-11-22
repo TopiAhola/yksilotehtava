@@ -231,9 +231,9 @@ async function createDailyMenuElement(targetElement, restaurantId) {
 
     for (let item of response.courses) {
       let listElem = document.createElement('li');
-      listElem.innerHTML = '' + item.name
-        + '<br>' + item.diets
-        + '<br>' + item.price;
+      listElem.innerHTML = '<p>' + item.name + '</p>'
+        + '<p>' + item.diets + '</p>'
+        + '<p>' + item.price + '</p>';
       targetElement.appendChild(listElem);
     }
 

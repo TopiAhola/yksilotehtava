@@ -10,7 +10,7 @@
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin=""/>
   <link rel="stylesheet" href="styles/style.css">
-  <link rel="stylesheet" href="styles/map-style.css">
+  <link rel="stylesheet" href="./styles/dialog-style.css">
   <link rel="stylesheet" href="./styles/image-style.css">
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -20,131 +20,135 @@
 </head>
 
 <body>
-<header>
-  <h1>Restaurants</h1>
+<div id="center">
+  <header>
+    <h1>Restaurants</h1>
 
-  <nav id="navbar">
-    navbar here
-    <button id="homeNavigationButton" navigationTarget="home-view">Home
-      button...
-    </button>
-    <button id="listNavigationButton" navigationTarget="list-view">List view
-      button...
-    </button>
-    <button id="profileNavigationButton" navigationTarget="profile-view">
-      Profile
-      button...
-    </button>
-    <button id="loginNavigationButton" navigationTarget="login-view">Login
-      button...
-    </button>
-  </nav>
-</header>
+    <nav id="navbar">
+      <button id="homeNavigationButton" navigationTarget="home-view">Home
+        button...
+      </button>
+      <button id="listNavigationButton" navigationTarget="list-view">List view
+        button...
+      </button>
+      <button id="profileNavigationButton" navigationTarget="profile-view">
+        Profile
+        button...
+      </button>
+      <button id="loginNavigationButton" navigationTarget="login-view">Login
+        button...
+      </button>
+    </nav>
+  </header>
 
+  <main id="main-section">
+    <dialog id="restaurant-dialog">
+      <div id="restaurant-dialog-info-area">restaurant info didn't load...</div>
+      <div id="restaurant-dialog-menu-area">restaurant menu didn't load...</div>
+    </dialog>
 
-<dialog id="restaurant-dialog">
-  <div id="restaurant-dialog-info-area">restaurant info didn't load...</div>
-  <div id="restaurant-dialog-menu-area">restaurant menu didn't load...</div>
-</dialog>
+    <div id="home-view" class="view">
+      home-view...
 
-<div id="home-view" class="view">
-  home-view...
+      <div id="favourite-restaurant-home" class="favourite-restaurant">
+        <div class="favourite-menu">
+          favourite-menu....
+          <button>Favourite restaurant info</button>
+        </div>
+      </div>
 
-  <div id="favourite-restaurant-home" class="favourite-restaurant">
-    <div class="favourite-menu">
-      favourite-menu....
-      <button>Favourite restaurant info</button>
-    </div>
-  </div>
+      <div id="nearest-restaurant-home" class="nearest-restaurant">
+        <div class="nearest-menu">
+          nearest-menu....
+          <button>Nearest restaurant info</button>
+        </div>
+      </div>
 
-  <div id="nearest-restaurant-home" class="nearest-restaurant">
-    <div class="nearest-menu">
-      nearest-menu....
-      <button>Nearest restaurant info</button>
-    </div>
-  </div>
+      <div id="map-area">
+        <div id="map">map here</div>
+      </div>
 
-  <div id="map-area">
-    <div id="map">map here</div>
-  </div>
-
-</div>
-
-
-<div id="list-view" class="view" style="display: none">
-  list view...
-
-  <div id="favourite-restaurant-list" class="favourite-restaurant">
-    <modal class="favourite-menu">
-      favourite-menu....
-      <button>Favourite restaurant info</button>
-    </modal>
-  </div>
-
-  <div id="nearest-restaurant-list" class="nearest-restaurant">
-    <div class="nearest-menu">
-      nearest-menu....
-      <button>Nearest restaurant info</button>
-    </div>
-  </div>
-
-
-  <div id="table-area">
-    <table id="restaurants-table">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Address</th>
-      </tr>
-      </thead>
-      <tbody id="restaurants-table-body">
-      <!-- add restaurants here -->
-      </tbody>
-    </table>
-  </div>
-</div>
-
-
-<div id="profile-view" class="view" style="display: none">
-  profile view...
-  <div id="profile-area">
-    profile shows here
-  </div>
-
-</div>
-
-
-<div id="login-view" class="view" style="display: none">
-  login view...
-  <div id="login-area">
-    <form id="login-form">
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <input type="submit" value="Login">
-    </form>
-  </div>
-
-
-  <modal id="register-modal" show-modal>
-    register modal...
-    <div id="register-area">
-      <form id="register-form" onsubmit="event.preventDefault();">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password1" placeholder="Password"
-               required>
-        <input type="password" name="password2" placeholder="Repeat password"
-               required>
-        <input type="submit" value="Register">
-      </form>
     </div>
 
-  </modal>
+
+    <div id="list-view" class="view" style="display: none">
+      list view...
+
+      <div id="favourite-restaurant-list" class="favourite-restaurant">
+        <modal class="favourite-menu">
+          favourite-menu....
+          <button>Favourite restaurant info</button>
+        </modal>
+      </div>
+
+      <div id="nearest-restaurant-list" class="nearest-restaurant">
+        <div class="nearest-menu">
+          nearest-menu....
+          <button>Nearest restaurant info</button>
+        </div>
+      </div>
+
+
+      <div id="table-area">
+        <table id="restaurants-table">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+          </tr>
+          </thead>
+          <tbody id="restaurants-table-body">
+          <!-- add restaurants here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div id="profile-view" class="view" style="display: none">
+      profile view...
+      <div id="profile-area">
+        profile shows here
+      </div>
+
+    </div>
+
+
+    <div id="login-view" class="view" style="display: none">
+      login view...
+      <div id="login-area">
+        <form id="login-form">
+          <input type="text" name="username" placeholder="Username" required>
+          <input type="password" name="password" placeholder="Password"
+                 required>
+          <input type="submit" value="Login">
+        </form>
+      </div>
+
+
+      <modal id="register-modal" show-modal>
+        register modal...
+        <div id="register-area">
+          <form id="register-form" onsubmit="event.preventDefault();">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password1" placeholder="Password"
+                   required>
+            <input type="password" name="password2"
+                   placeholder="Repeat password"
+                   required>
+            <input type="submit" value="Register">
+          </form>
+        </div>
+
+      </modal>
+
+    </div>
+  </main>
+
+  <footer>
+    footer...
+  </footer>
 
 </div>
-
-
-<footer>
-  footer...
-</footer>
 </body>
 </html>
