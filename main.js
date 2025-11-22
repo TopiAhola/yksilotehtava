@@ -1,6 +1,7 @@
 'use strict';
 
 import {handleAutoLogin, getLocation, drawMap} from "./functions.js";
+import {getRestaurants} from './api.js';
 
 
 //tarkista onko tokenia

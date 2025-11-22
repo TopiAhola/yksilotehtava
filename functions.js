@@ -1,6 +1,7 @@
 'use strict';
 
 import {getUser} from "./api.js";
+import {toggleHighlight, showDialog} from './eventhandlers.js';
 
 
 const handleAutoLogin = async () => {
@@ -32,36 +33,45 @@ const handleAutoLogin = async () => {
  * @returns {null}
  */
 async function getLocation() {
-  let userLocation = null;
-  let locationText = "";
-//Try getting location
-  try {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        userLocation = [position.coords.latitude, position.coords.longitude]
-        console.log(userLocation + "set by callback")
-        locationText = "Location from browser";
-        return userLocation;
 
-      },
-      () => {
-        console.log("getCurrentPosition not available")
-        userLocation = [60, 20];
-        console.log("Default location used by callback")
-        locationText = "Using default location";
-        return null;
-      }
-    );
+  let userLocation = await new Promise((resolve, reject) => {
+    //Try getting location
+    try {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const loc = [position.coords.latitude, position.coords.longitude]
+          console.log(loc + "set by callback")
+          resolve(loc);
+        },
+        () => {
+          console.log("getCurrentPosition not available")
+          resolve(null);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 4000,
+          maximumAge: 0,
+        }
+      );
 
-  } catch (error) {
-    console.log("Location error");
-    userLocation = [0, 0];
-    console.log("Default location 2 used")
-    return null;
-  }
+    } catch (error) {
+      console.log("Location error");
+      console.log("Default location used")
+      reject(null)
+    }
+
+  });
+
+  //return location when resolved
+  return userLocation;
+
 }
 
 function drawMap(userLocation, restaurants) {
+  console.log('drawMap:');
+  console.log(userLocation);
+  console.log(restaurants);
+
   let mapDiv = document.querySelector('#map');
   let map = L.map('map').setView(userLocation, 6);
 
@@ -92,5 +102,46 @@ function drawMap(userLocation, restaurants) {
   }
 }
 
+/**
+ *
+ * @param restaurantsArray
+ */
+function createRestElements(restaurantsArray) {
+  console.log("Create restaurant elements");
+  console.log(restaurantsArray);
 
-export {handleAutoLogin, getLocation, drawMap}
+  //Sort restaurants //TODO: poista tämä?
+  if (Array.isArray(restaurantsArray)) {
+    console.log("restaurantsArray is array");
+  } else {
+    console.log("restaurantsArray is not array!");
+    let restArray = restaurantsArray.data;
+    console.log(restaurantsArray);
+  }
+
+  restaurantsArray.sort((a, b) => {
+    return a.name.localeCompare(b.name);
+  });
+
+  /*restaurants = restaurantsArray;*/ //mitä tämä tekee?
+
+  for (let r of restaurantsArray) {
+    let restaurantElement = document.createElement('tr');
+    restaurantElement.setAttribute('class', 'restaurant');
+    restaurantElement.setAttribute('listIndex', restaurantsArray.indexOf(r).toString());
+    restaurantElement.addEventListener('click', toggleHighlight);
+    restaurantElement.addEventListener('click', showDialog);
+
+    let nameCell = document.createElement('td');
+    nameCell.innerHTML = r.name;
+
+    let addressCell = document.createElement('td');
+    addressCell.innerHTML = r.address;
+
+    restaurantElement.append(nameCell, addressCell);
+    document.querySelector('#restaurants-table').append(restaurantElement);
+  }
+}
+
+
+export {handleAutoLogin, getLocation, drawMap, createRestElements}

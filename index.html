@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
+    <title>Restaurants</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurants</title>
 
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -12,10 +12,11 @@
           crossorigin=""/>
     <link rel="stylesheet" href="style.css">
 
-
-    <script src="restaurants.js" type="module" defer></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin="" defer></script>
+   
     <script src="main.js" type="module" defer></script>
-
 </head>
 
 <body>
@@ -50,7 +51,7 @@
 <modal id="list-modal" show-modal>
     list modal...
     <div id="table-area">
-        <table>
+        <table id="restaurants-table">
             <tr>
                 <th>Name</th>
                 <th>Address</th>

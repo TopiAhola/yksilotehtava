@@ -1,1 +1,81 @@
 'use strict';
+
+
+//resets and shows dialog
+function showDialog(event) {
+  console.log(showDialog);
+
+  //get and reset dialog
+  let dialog = document.querySelector('dialog');
+  dialog.innerHTML = ``;
+
+  //add close button
+  let closeDialogButton = document.createElement('button');
+  closeDialogButton.addEventListener('click', closeDialog);
+  closeDialogButton.innerHTML = 'Close';
+  closeDialogButton.style.fontSize = '1.5em';
+  dialog.appendChild(closeDialogButton);
+
+  //add info
+  let paragraph = document.createElement('p');
+  let index = Number(event.target.parentElement.getAttribute('listIndex'));
+  paragraph.innerHTML = '' + restaurants[index].name + '<br><br>'
+    + 'Address: <br>'
+    + restaurants[index].address + '<br>'
+    + restaurants[index].postalCode + ' ' + restaurants[index].city + '<br><br>'
+    + 'Phone: <br>'
+    + restaurants[index].phone + '<br><br>'
+    + 'Company: ' + restaurants[index].company + '<br>'
+  ;
+  dialog.appendChild(paragraph);
+
+  //add menu, call updateMenu with menu as target
+  let menu = document.createElement('div');
+  menu.id = 'menu';
+  dialog.appendChild(menu);
+  updateMenu(menu, restaurants[index]._id);
+
+
+  //get position of row, put dialog there
+  let targetRect = event.target.parentElement.getBoundingClientRect();
+  let targetPosition = targetRect.bottom;
+
+  //position of end of list
+  let listRect = event.target.parentElement.parentElement.getBoundingClientRect();
+  let listBottom = listRect.bottom;
+
+  //relative offset to move dialog upward
+  let offset = -(listBottom - targetPosition + 1); //+i to cover margin gap in table
+  console.log("dialog offset:" + offset);
+  dialog.style.top = offset + 'px';
+  dialog.style.minWidth = targetRect.width + 'px';
+  dialog.show();
+}
+
+
+/**
+ * Closes the dialog targeted by the event
+ * @param event
+ */
+function closeDialog(event) {
+  console.log("closeDialog")
+  event.target.close()
+
+  //document.querySelector('dialog').close();
+}
+
+
+//remove highlights and add one for target
+function toggleHighlight(event) {
+  for (let elem of document.getElementsByClassName('highlight')) {
+    elem.classList.remove('highlight');
+  }
+  //event.target.classList.add('highlight'); //highlights the cell
+  console.log(event.target + "highlighted");
+  event.target.parentElement.classList.add('highlight'); //highlits the row
+
+  //showDialog(event); //TODO: poista tämä?
+}
+
+
+export {showDialog, closeDialog, toggleHighlight};
