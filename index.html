@@ -27,16 +27,22 @@
 
   <nav id="navbar">
     navbar here
-    <button id="homeNavigationButton">Home button...</button>
-    <button id="listNavigationButtonEvent">List view button...
+    <button id="homeNavigationButton" navigationTarget="home-view">Home
+      button...
     </button>
-    <button id="profileNavigationButtonEvent">Profile button...
+    <button id="listNavigationButton" navigationTarget="list-view">List view
+      button...
     </button>
-    <button id="loginNavigationButtonEvent">Login button...</button>
+    <button id="profileNavigationButton" navigationTarget="profile-view">Profile
+      button...
+    </button>
+    <button id="loginNavigationButton" navigationTarget="login-view">Login
+      button...
+    </button>
   </nav>
 </header>
 
-<modal id="home-view" class="view" show-modal>
+<div id="home-view" class="view">
   home-view...
   <div id="favourite-restaurant-home">
     <modal id="favourite-menu" show-modal>
@@ -54,14 +60,14 @@
     <div id="map">map here</div>
   </div>
 
-  <modal id="restaurant-modal" show-modal>
+  <dialog id="restaurant-modal">
     restaurant modal....
-  </modal>
+  </dialog>
 
-</modal>
+</div>
 
 
-<modal id="list-view" class="view" show-modal>
+<div id="list-view" class="view" style="display: none">
   list view...
 
   <div id="favourite-restaurant-list-view">
@@ -74,13 +80,19 @@
 
 
   <div id="table-area">
+
     <table id="restaurants-table">
+      <thead>
       <tr>
         <th>Name</th>
         <th>Address</th>
       </tr>
+      </thead>
+      <tbody id="restaurants-table-body">
       <!-- add restaurants here -->
+      </tbody>
     </table>
+
   </div>
 
   <!-- modal -->
@@ -92,16 +104,19 @@
     restaurant modal...
   </modal>
 
-</modal>
+</div>
 
 
-<modal id="profile-view" class="view" show-modal>
+<div id="profile-view" class="view" style="display: none">
   profile view...
+  <div id="profile-area">
+    profile shows here
+  </div>
 
-</modal>
+</div>
 
 
-<modal id="login-view" show-modal>
+<div id="login-view" class="view" style="display: none">
   login view...
   <div id="login-area">
     <form id="login-form">
@@ -110,21 +125,23 @@
       <input type="submit" value="Login">
     </form>
   </div>
-</modal>
 
-<modal id="register-modal" show-modal>
-  register modal...
-  <div id="register-area">
-    <form id="register-form" onsubmit="event.preventDefault();">
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="password" name="password1" placeholder="Password" required>
-      <input type="password" name="password2" placeholder="Repeat password"
-             required>
-      <input type="submit" value="Register">
-    </form>
-  </div>
 
-</modal>
+  <modal id="register-modal" show-modal>
+    register modal...
+    <div id="register-area">
+      <form id="register-form" onsubmit="event.preventDefault();">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password1" placeholder="Password" required>
+        <input type="password" name="password2" placeholder="Repeat password"
+               required>
+        <input type="submit" value="Register">
+      </form>
+    </div>
+
+  </modal>
+
+</div>
 
 
 <footer>

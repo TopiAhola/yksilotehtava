@@ -4,25 +4,36 @@ import {
   handleAutoLogin,
   getLocation,
   drawMap,
-  setNearestRestaurant
+  setNearestRestaurant, createRestElements
 } from "./functions.js";
 import {setEventHandlers} from './eventhandlers.js';
 import {getRestaurants} from './api.js';
 import restaurantsPlaceholder from "./placeholder.js";
 
+////////////////////////////////////////////////////
+//main
+
 //aseta event handlerit
 setEventHandlers();
 
 //tarkista onko tokenia
-handleAutoLogin();
+const user = handleAutoLogin();
+
+//navigoi navigationTarget localstoragen perusteella??
 
 //tarkista sijainti
 let userLocation = getLocation();
-console.log(userLocation);
 
 //hae ravintolat
 let restaurants = restaurantsPlaceholder;
 restaurants = getRestaurants();
+
+//kun ravintolat saapuvat piirrä ne
+restaurants.then(
+  (restaurants) => {
+    createRestElements(restaurants)
+  }
+);
 
 //odota sijaintia ja ravintoloita, sitten piirrä kartta
 Promise.all([userLocation, restaurants])

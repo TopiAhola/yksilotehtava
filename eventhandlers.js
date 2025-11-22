@@ -3,7 +3,7 @@
 
 //resets and shows dialog
 function showDialog(event) {
-  console.log(showDialog);
+  console.log('showDialog');
 
   //get and reset dialog
   let dialog = document.querySelector('dialog');
@@ -115,6 +115,61 @@ function closeDialog(event) {
 }
 
 
+/**
+ *
+ * @param event
+ */
+//resets and shows dialog
+function showRestaurantDialog(event) {
+  console.log('showRestaurantDialog');
+
+  //get and reset dialog
+  let dialog = document.querySelector('#restaurant-modal');
+  dialog.innerHTML = ``;
+
+  //add close button
+  let closeDialogButton = document.createElement('button');
+  closeDialogButton.addEventListener('click', closeDialog);
+  closeDialogButton.innerHTML = 'Close';
+  closeDialogButton.style.fontSize = '1.5em';
+  dialog.appendChild(closeDialogButton);
+
+  //add info
+  let paragraph = document.createElement('p');
+  let index = Number(event.target.parentElement.getAttribute('listIndex'));
+  paragraph.innerHTML = '' + restaurants[index].name + '<br><br>'
+    + 'Address: <br>'
+    + restaurants[index].address + '<br>'
+    + restaurants[index].postalCode + ' ' + restaurants[index].city + '<br><br>'
+    + 'Phone: <br>'
+    + restaurants[index].phone + '<br><br>'
+    + 'Company: ' + restaurants[index].company + '<br>'
+  ;
+  dialog.appendChild(paragraph);
+
+  //add menu, call updateMenu with menu as target
+  let menu = document.createElement('div');
+  menu.id = 'menu';
+  dialog.appendChild(menu);
+  updateMenu(menu, restaurants[index]._id);
+
+
+  //get position of row, put dialog there
+  let targetRect = event.target.parentElement.getBoundingClientRect();
+  let targetPosition = targetRect.bottom;
+
+  //position of end of list
+  let listRect = event.target.parentElement.parentElement.getBoundingClientRect();
+  let listBottom = listRect.bottom;
+
+  //relative offset to move dialog upward
+  let offset = -(listBottom - targetPosition + 1); //+i to cover margin gap in table
+  console.log("dialog offset:" + offset);
+  dialog.style.top = offset + 'px';
+  dialog.style.minWidth = targetRect.width + 'px';
+  dialog.show();
+}
+
 //remove highlights and add one for target
 function toggleHighlight(event) {
   for (let elem of document.getElementsByClassName('highlight')) {
@@ -136,31 +191,53 @@ function loginButtonEvent(event) {
 /////////////////////////////////////////////////
 //navbar event handlers
 
-function homeNavigationButtonEvent(event) {
-  event.preventDefault();
-  console.log('homeNavigationButtonEvent');
+/**
+ * Hides all view class elements. Used by navigationButtonEvent.
+ */
+function hideViews() {
+  const views = document.querySelectorAll(".view");
+  views.forEach(view => {
+    view.style.display = 'none'
+  });
 }
 
-function listNavigationButtonEvent(event) {
+/**
+ * Shows view defined in buttons navigationTarget attribute.
+ * Hides other view-class elements.
+ * @param event
+ */
+function navigationButtonEvent(event) {
   event.preventDefault();
-  console.log('listNavigationButtonEvent');
+  const navigationTarget = event.target.getAttribute("navigationTarget");
+  console.log('navigationButtonEvent: ' + navigationTarget);
+  //hide all views
+  hideViews();
+  //display target view
+  document.getElementById(navigationTarget).style.display = 'block';
+  //save current view to localstorage
+  localStorage.setItem('navigationTarget', navigationTarget);
 }
 
-function profileNavigationButtonEvent(event) {
-  event.preventDefault();
-  console.log('profileNavigationButtonEvent');
-}
 
-function loginNavigationButtonEvent(event) {
-  event.preventDefault();
-  console.log('loginNavigationButtonEvent');
-}
-
-
+/**
+ * Sets event handlers for static elements
+ */
 function setEventHandlers() {
   console.log('setEventHandlers');
+  //navbar
+  document.querySelector('#homeNavigationButton').addEventListener('click', navigationButtonEvent);
+  document.querySelector('#listNavigationButton').addEventListener('click', navigationButtonEvent);
+  document.querySelector('#profileNavigationButton').addEventListener('click', navigationButtonEvent);
+  document.querySelector('#loginNavigationButton').addEventListener('click', navigationButtonEvent);
+
 
 }
 
 
-export {showDialog, closeDialog, toggleHighlight, setEventHandlers};
+export {
+  showDialog,
+  closeDialog,
+  toggleHighlight,
+  setEventHandlers,
+  showRestaurantDialog
+};

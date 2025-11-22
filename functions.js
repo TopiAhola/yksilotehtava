@@ -1,7 +1,10 @@
 'use strict';
 
 import {getUser} from "./api.js";
-import {toggleHighlight, showDialog} from './eventhandlers.js';
+import {
+  toggleHighlight,
+  showRestaurantDialog
+} from './eventhandlers.js';
 
 
 const handleAutoLogin = async () => {
@@ -116,44 +119,45 @@ function drawMap(userLocation, restaurants) {
 }
 
 /**
- *
+ * Creates table row elements from array of restaurants
  * @param restaurantsArray
  */
 function createRestElements(restaurantsArray) {
   console.log("Create restaurant elements");
   console.log(restaurantsArray);
 
-  //Sort restaurants //TODO: poista tämä?
   if (Array.isArray(restaurantsArray)) {
     console.log("restaurantsArray is array");
+
+    //Sort restaurants
+    restaurantsArray.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
+
+    //add elements to document
+    for (let r of restaurantsArray) {
+      let restaurantElement = document.createElement('tr');
+      restaurantElement.setAttribute('class', 'restaurant');
+      restaurantElement.setAttribute('listIndex', restaurantsArray.indexOf(r).toString());
+      restaurantElement.addEventListener('click', toggleHighlight);
+      restaurantElement.addEventListener('click', showRestaurantDialog);
+
+      let nameCell = document.createElement('td');
+      nameCell.innerHTML = r.name;
+
+      let addressCell = document.createElement('td');
+      addressCell.innerHTML = r.address;
+
+      restaurantElement.append(nameCell, addressCell);
+      document.querySelector('#restaurants-table-body').append(restaurantElement);
+    }
+
+
   } else {
     console.log("restaurantsArray is not array!");
-    let restArray = restaurantsArray.data;
-    console.log(restaurantsArray);
   }
 
-  restaurantsArray.sort((a, b) => {
-    return a.name.localeCompare(b.name);
-  });
 
-  /*restaurants = restaurantsArray;*/ //mitä tämä tekee?
-
-  for (let r of restaurantsArray) {
-    let restaurantElement = document.createElement('tr');
-    restaurantElement.setAttribute('class', 'restaurant');
-    restaurantElement.setAttribute('listIndex', restaurantsArray.indexOf(r).toString());
-    restaurantElement.addEventListener('click', toggleHighlight);
-    restaurantElement.addEventListener('click', showDialog);
-
-    let nameCell = document.createElement('td');
-    nameCell.innerHTML = r.name;
-
-    let addressCell = document.createElement('td');
-    addressCell.innerHTML = r.address;
-
-    restaurantElement.append(nameCell, addressCell);
-    document.querySelector('#restaurants-table').append(restaurantElement);
-  }
 }
 
 /**
