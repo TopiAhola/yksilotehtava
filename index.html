@@ -18,6 +18,7 @@
           crossorigin="" defer></script>
 
   <script src="main.js" type="module" defer></script>
+  <script src="eventhandlers.js" type="module" defer></script>
 </head>
 
 <body>
@@ -26,16 +27,24 @@
 
   <nav id="navbar">
     navbar here
-    <button>Home button...</button>
-    <button>List view button...</button>
-    <button>Profile button...</button>
-    <button>Login button...</button>
+    <button id="homeNavigationButton">Home button...</button>
+    <button id="listNavigationButtonEvent">List view button...
+    </button>
+    <button id="profileNavigationButtonEvent">Profile button...
+    </button>
+    <button id="loginNavigationButtonEvent">Login button...</button>
   </nav>
 </header>
 
 <modal id="home-view" class="view" show-modal>
   home-view...
-  <div id="favourite-restaurant">
+  <div id="favourite-restaurant-home">
+    <modal id="favourite-menu" show-modal>
+      favourite-menu....
+    </modal>
+  </div>
+
+  <div id="nearest-restaurant-home">
     <modal id="favourite-menu" show-modal>
       favourite-menu....
     </modal>
@@ -54,6 +63,16 @@
 
 <modal id="list-view" class="view" show-modal>
   list view...
+
+  <div id="favourite-restaurant-list-view">
+    <button>Favourite restaurant info</button>
+  </div>
+
+  <div class="nearest-restaurant-list-view">
+    <button>Nearest restaurant info</button>
+  </div>
+
+
   <div id="table-area">
     <table id="restaurants-table">
       <tr>
@@ -95,6 +114,16 @@
 
 <modal id="register-modal" show-modal>
   register modal...
+  <div id="register-area">
+    <form id="register-form" onsubmit="event.preventDefault();">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password1" placeholder="Password" required>
+      <input type="password" name="password2" placeholder="Repeat password"
+             required>
+      <input type="submit" value="Register">
+    </form>
+  </div>
+
 </modal>
 
 

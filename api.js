@@ -1,6 +1,9 @@
 'use strict';
 
-
+/**
+ * URL: https://media2.edu.metropolia.fi/restaurant
+ * @type {string}
+ */
 const baseUrl = 'https://media2.edu.metropolia.fi/restaurant';
 
 
@@ -49,6 +52,11 @@ async function updateUser(user, token) {
   }
 }
 
+/**
+ * Returns user data based on token.
+ * @param token
+ * @returns {Promise<{message: string, user}|{message: string}>}
+ */
 async function getUser(token) {
   const url = '/api/v1/users/token';
   console.log('getUser: ' + baseUrl + url);
@@ -87,32 +95,54 @@ async function getUser(token) {
 async function deleteUser(user, token) {
 }
 
-
+/**
+ *
+ * @param username
+ * @param password
+ * @returns {Promise<void>}
+ */
 async function login(username, password) {
-  const url = '/api/v1/auth/login'
+  const loginUrl = "/api/v1/auth/login";
+  const options = {
+    method: "POST",
+    contentType: "application/json",
+    headers: {},
+    body: JSON.stringify({
+        "username": username,
+        "password": password
+      }
+    )
+  };
 
+  console.log('login: ' + baseUrl + loginUrl);
+  console.log(options);
   try {
-    let response = await fetch(baseUrl + url, {
-      method: "POST",
-      contentType: "application/json",
-      headers: {},
-
-      body: JSON.stringify({
-          "username": username,
-          "password": password
-        }
-      )
-    });
+    let response = await fetch(baseUrl + loginUrl, options);
     console.log(response);
 
     let responseJson = await response.json();
-    console.log(responseJson);
-
+    console.log(responseJson.message);
+    localStorage.setItem('token', responseJson.token);
 
   } catch (error) {
     console.log(error);
   }
 }
+
+/*
+* {
+  "message": "Login successful",
+  "token": "asdasdasdasdas...",
+  "data": {
+    "username": "asdfghj",
+    "email": "asdfghj@example.com",
+    "favouriteRestaurant": "65f37b9fcf627e00930bbd89",
+    "_id": "691dfde03116ae25faca7f38",
+    "role": "user",
+    "activated": true
+  }
+}
+* */
 
 
 /////////////////////////////////////////////////////////

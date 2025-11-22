@@ -156,5 +156,19 @@ function createRestElements(restaurantsArray) {
   }
 }
 
+/**
+ * Sets contents nearest restaurant based on location
+ * @param userLocation
+ */
+function setNearestRestaurant(userLocation) {
+  console.log('setNearestRestaurant:' + userLocation);
+}
 
-export {handleAutoLogin, getLocation, drawMap, createRestElements}
+
+export {
+  handleAutoLogin,
+  getLocation,
+  drawMap,
+  createRestElements,
+  setNearestRestaurant
+}
