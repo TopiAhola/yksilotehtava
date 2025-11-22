@@ -3,7 +3,7 @@
 import {getUser} from "./api.js";
 import {
   toggleHighlight,
-  showRestaurantDialog
+  closeDialog
 } from './eventhandlers.js';
 
 
@@ -139,8 +139,9 @@ function createRestElements(restaurantsArray) {
       let restaurantElement = document.createElement('tr');
       restaurantElement.setAttribute('class', 'restaurant');
       restaurantElement.setAttribute('listIndex', restaurantsArray.indexOf(r).toString());
+      restaurantElement.setAttribute("_id", r._id);
       restaurantElement.addEventListener('click', toggleHighlight);
-      restaurantElement.addEventListener('click', showRestaurantDialog);
+      restaurantElement.addEventListener('click', createRestaurantDialogEventHandler(r));
 
       let nameCell = document.createElement('td');
       nameCell.innerHTML = r.name;
@@ -157,6 +158,66 @@ function createRestElements(restaurantsArray) {
     console.log("restaurantsArray is not array!");
   }
 
+  /**
+   * Creates an event handler specific to this restaurant
+   * @param restaurant
+   */
+  function createRestaurantDialogEventHandler(restaurant) {
+    const handler = (event) => {
+      //get and reset dialog
+      let dialog = document.querySelector('#restaurant-modal-table-area');
+      dialog.innerHTML = ``;
+
+      //add close button
+      let closeDialogButton = document.createElement('button');
+      closeDialogButton.addEventListener('click', () => {
+        dialog.close();
+      });
+      closeDialogButton.innerHTML = 'Close';
+      closeDialogButton.style.fontSize = '1.5em';
+      dialog.appendChild(closeDialogButton);
+
+      //add info
+      let paragraph = document.createElement('p');
+
+      paragraph.innerHTML = '' + restaurant.name + '<br><br>'
+        + 'Address: <br>'
+        + restaurant.address + '<br>'
+        + restaurant.postalCode + ' ' + restaurant.city + '<br><br>'
+        + 'Phone: <br>'
+        + restaurant.phone + '<br><br>'
+        + 'Company: ' + restaurant.company + '<br>'
+      ;
+      dialog.appendChild(paragraph);
+
+      //add menu, call updateMenu with menu as target
+      let menu = document.createElement('div');
+      menu.id = 'menu';
+      dialog.appendChild(menu);
+
+      //updateMenu(menu, restaurant._id);
+
+
+      //get position of row, put dialog there
+      let targetRect = event.target.parentElement.getBoundingClientRect();
+      let targetPosition = targetRect.bottom;
+
+      //position of end of list
+      let listRect = event.target.parentElement.parentElement.getBoundingClientRect();
+      let listBottom = listRect.bottom;
+
+      //relative offset to move dialog upward
+      let offset = -(listBottom - targetPosition + 1); //+i to cover margin gap in table
+      console.log("dialog offset:" + offset);
+      dialog.style.top = offset + 'px';
+      dialog.style.minWidth = targetRect.width + 'px';
+      dialog.show();
+
+    }
+
+    return handler;
+  }
+
 
 }
 
@@ -168,11 +229,36 @@ function setNearestRestaurant(userLocation) {
   console.log('setNearestRestaurant:' + userLocation);
 }
 
+/**
+ * Sets content to favouriterestaurant element based on users data.
+ * @param user
+ * @param restaurants
+ */
+function setFavouriteRestaurant(user, restaurants){
+  console.log('setFavouriteRestaurant');
+  console.log(user, restaurants);
+  const favRestaurantId = Number(user.favouriteRestaurant);
+  const favRestaurant = restaurants.find( (r)=> (r === favRestaurantId);
+
+  if (user === null) {
+    console.log('user not logged in');
+
+  } else if ( favRestaurant === undefined) {
+    console.log('favourite restaurant not found');
+
+  } else if (user && favRestaurant) {
+    console.log(user.username +' favourite restaurant '+favRestaurant._id);
+
+  }
+
+}
+
 
 export {
   handleAutoLogin,
   getLocation,
   drawMap,
   createRestElements,
-  setNearestRestaurant
+  setNearestRestaurant,
+  setFavouriteRestaurant
 }

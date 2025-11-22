@@ -31,18 +31,23 @@ restaurants = getRestaurants();
 //kun ravintolat saapuvat piirrä ne
 restaurants.then(
   (restaurants) => {
-    createRestElements(restaurants)
+    createRestElements(restaurants);
+    setFavouriteRestaurant(user, restaurants);
   }
 );
 
-//odota sijaintia ja ravintoloita, sitten piirrä kartta
+//odota sijaintia ja ravintoloita
 Promise.all([userLocation, restaurants])
   .then(([ul, r]) => {
-    drawMap(ul, r)
+    //sitten piirrä kartta
+    drawMap(ul, r);
+
+    //lataa lähin ravintola jos sijainti on tiedossa
+    if (!userLocation === null) {
+      setNearestRestaurant(userLocation);
+    }
   });
 
-//lataa lähin ravintola jos sijainti on tiedossa
-if (!userLocation === null) {
-  setNearestRestaurant(userLocation);
-}
+
+
 

@@ -115,61 +115,6 @@ function closeDialog(event) {
 }
 
 
-/**
- *
- * @param event
- */
-//resets and shows dialog
-function showRestaurantDialog(event) {
-  console.log('showRestaurantDialog');
-
-  //get and reset dialog
-  let dialog = document.querySelector('#restaurant-modal');
-  dialog.innerHTML = ``;
-
-  //add close button
-  let closeDialogButton = document.createElement('button');
-  closeDialogButton.addEventListener('click', closeDialog);
-  closeDialogButton.innerHTML = 'Close';
-  closeDialogButton.style.fontSize = '1.5em';
-  dialog.appendChild(closeDialogButton);
-
-  //add info
-  let paragraph = document.createElement('p');
-  let index = Number(event.target.parentElement.getAttribute('listIndex'));
-  paragraph.innerHTML = '' + restaurants[index].name + '<br><br>'
-    + 'Address: <br>'
-    + restaurants[index].address + '<br>'
-    + restaurants[index].postalCode + ' ' + restaurants[index].city + '<br><br>'
-    + 'Phone: <br>'
-    + restaurants[index].phone + '<br><br>'
-    + 'Company: ' + restaurants[index].company + '<br>'
-  ;
-  dialog.appendChild(paragraph);
-
-  //add menu, call updateMenu with menu as target
-  let menu = document.createElement('div');
-  menu.id = 'menu';
-  dialog.appendChild(menu);
-  updateMenu(menu, restaurants[index]._id);
-
-
-  //get position of row, put dialog there
-  let targetRect = event.target.parentElement.getBoundingClientRect();
-  let targetPosition = targetRect.bottom;
-
-  //position of end of list
-  let listRect = event.target.parentElement.parentElement.getBoundingClientRect();
-  let listBottom = listRect.bottom;
-
-  //relative offset to move dialog upward
-  let offset = -(listBottom - targetPosition + 1); //+i to cover margin gap in table
-  console.log("dialog offset:" + offset);
-  dialog.style.top = offset + 'px';
-  dialog.style.minWidth = targetRect.width + 'px';
-  dialog.show();
-}
-
 //remove highlights and add one for target
 function toggleHighlight(event) {
   for (let elem of document.getElementsByClassName('highlight')) {
@@ -239,5 +184,4 @@ export {
   closeDialog,
   toggleHighlight,
   setEventHandlers,
-  showRestaurantDialog
 };
