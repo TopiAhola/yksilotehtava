@@ -178,36 +178,77 @@ async function getRestaurants() {
 
 //TODO: tämä....
 /**
- * returns the menu when promise resolves, else returns object with empty array
+ * Returns the daily menu by restaurant _id when promise resolves.
+ * Returns an empty array on error.
  * @param restId
- * @returns {Promise<{courses: *[]}|{courses: *[]}>}
+
  */
-const getDailyMenu = async (restId) => {
+async function getDailyMenu(restId) {
+  //dailyMenuUrl = "/api/v1/restaurants/daily/:id/:lang";
+  const dailyMenuUrl = `/api/v1/restaurants/daily/${restId}/en`;
+  console.log("fetch:" + baseUrl + dailyMenuUrl);
+
   try {
-    const dailyMenuUrl = "/api/v1/restaurants/daily/:id/:lang";
-    let fetchString = `/api/v1/restaurants/daily/${restId}/en`;
-    console.log("fetch:" + baseUrl + fetchString);
-
-    let response = await fetch(baseUrl + fetchString)
-
+    let response = await fetch(baseUrl + dailyMenuUrl);
     console.log(response);
+
     if (response.ok) {
-      let menu = response.json();
-      console.log("Response ok");
+      let menu = await response.json();
+      console.log("getDailyMenu Response ok");
       console.log(menu);
       return menu;
 
     } else {
-      console.log("Response not ok")
+      console.log("getDailyMenu Response not ok")
       return {courses: []};
     }
 
   } catch (error) {
-    console.log("Error in updateMenu")
+    console.log("Error in getDailyMenu")
     console.log(error);
-    //return {courses : [] };
+    return {courses: []};
   }
+}
+
+/**
+ * Returns the weekly menu by restaurant _id when promise resolves.
+ * Returns an empty array on error.
+ * @param restId
+ * @returns {Promise<{days: *[]}|any>}
+ */
+async function getWeeklyMenu(restId) {
+  //weeklyMenuUrl = "/api/v1/restaurants/weekly/:id/:lang";
+  const weeklyMenuUrl = `/api/v1/restaurants/weekly/${restId}/en`;
+  console.log("fetch:" + baseUrl + weeklyMenuUrl);
+
+  try {
+    const response = await fetch(baseUrl + weeklyMenuUrl);
+    console.log(response);
+
+    if (response.ok) {
+      const daysObject = await response.json();
+      console.log("getWeeklyMenu Response ok");
+      console.log(daysObject);
+      return daysObject;
+
+    } else {
+      console.log("getWeeklyMenu Response not ok")
+      return {days: []};
+    }
+
+  } catch (error) {
+    console.log("Error in getWeeklyMenu")
+    console.log(error);
+    return {days: []};
+  }
+}
+
+
+export {
+  updateUser,
+  getUser,
+  login,
+  getRestaurants,
+  getDailyMenu,
+  getWeeklyMenu
 };
-
-
-export {updateUser, getUser, login, getRestaurants};

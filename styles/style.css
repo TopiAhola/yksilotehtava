@@ -7,14 +7,16 @@ body {
 
 }
 
-section {
-  margin: auto;
-}
-
 h1 {
   background-color: whitesmoke;
   margin: 0;
   padding: 20px 10px;
+}
+
+nav {
+  background-color: greenyellow;
+  position: sticky;
+  top: 0;
 }
 
 table {
@@ -45,8 +47,8 @@ td {
 
 }
 
-dialog {
-  position: relative;
+#restaurant-dialog {
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
@@ -55,6 +57,10 @@ dialog {
   background-color: white;
   border: 4px solid #ffbf00;
   border-radius: 0 20px 20px 0;
+
+  width: 90%;
+  height: 90%;
+
 }
 
 dialog #menu li {

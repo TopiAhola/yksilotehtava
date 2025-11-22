@@ -1,6 +1,6 @@
 'use strict';
 
-import {getUser} from "./api.js";
+import {getDailyMenu, getUser, getWeeklyMenu} from "./api.js";
 import {
   toggleHighlight,
   closeDialog
@@ -165,7 +165,7 @@ function createRestElements(restaurantsArray) {
   function createRestaurantDialogEventHandler(restaurant) {
     const handler = (event) => {
       //get and reset dialog
-      let dialog = document.querySelector('#restaurant-modal-table-area');
+      let dialog = document.querySelector('#restaurant-dialog');
       dialog.innerHTML = ``;
 
       //add close button
@@ -191,26 +191,17 @@ function createRestElements(restaurantsArray) {
       dialog.appendChild(paragraph);
 
       //add menu, call updateMenu with menu as target
-      let menu = document.createElement('div');
-      menu.id = 'menu';
-      dialog.appendChild(menu);
+      let dailyMenu = document.createElement('div');
+      dailyMenu.id = 'dailyMenu';
+      dialog.appendChild(dailyMenu);
+      createDailyMenuElement(dailyMenu, restaurant._id);
 
-      //updateMenu(menu, restaurant._id);
+      //add menu, call updateMenu with menu as target
+      let weeklyMenu = document.createElement('div');
+      weeklyMenu.id = 'weeklyMenu';
+      dialog.appendChild(weeklyMenu);
+      createWeeklyMenuElement(weeklyMenu, restaurant._id);
 
-
-      //get position of row, put dialog there
-      let targetRect = event.target.parentElement.getBoundingClientRect();
-      let targetPosition = targetRect.bottom;
-
-      //position of end of list
-      let listRect = event.target.parentElement.parentElement.getBoundingClientRect();
-      let listBottom = listRect.bottom;
-
-      //relative offset to move dialog upward
-      let offset = -(listBottom - targetPosition + 1); //+i to cover margin gap in table
-      console.log("dialog offset:" + offset);
-      dialog.style.top = offset + 'px';
-      dialog.style.minWidth = targetRect.width + 'px';
       dialog.show();
 
     }
@@ -220,6 +211,83 @@ function createRestElements(restaurantsArray) {
 
 
 }
+
+/**
+ *
+ * @param targetElement
+ * @param restaurantId
+ * @returns {Promise<void>}
+ */
+async function createDailyMenuElement(targetElement, restaurantId) {
+  try {
+    const response = await getDailyMenu(restaurantId)
+
+    console.log(response.courses);
+    let menuHeading = document.createElement('h4');
+    menuHeading.innerHTML = 'Daily menu';
+    targetElement.appendChild(menuHeading);
+
+    for (let item of response.courses) {
+      let listElem = document.createElement('li');
+      listElem.innerHTML = '' + item.name
+        + '<br>' + item.diets
+        + '<br>' + item.price;
+      targetElement.appendChild(listElem);
+    }
+
+    if (response.courses.length === 0) {
+      let errorListElem = document.createElement('li');
+      errorListElem.innerHTML = 'Menu not available';
+      targetElement.appendChild(errorListElem);
+    }
+
+
+  } catch (error) {
+    console.log("Error in createDailyMenuElement")
+    console.log(error);
+
+  }
+}
+
+
+async function createWeeklyMenuElement(targetElement, restaurantId) {
+  try {
+    const response = await getWeeklyMenu(restaurantId)
+    console.log('createWeeklyMenuElement')
+    console.log(response);
+
+    //week heading
+    let menuHeading = document.createElement('h4');
+    menuHeading.innerHTML = 'Weekly menu';
+    targetElement.appendChild(menuHeading);
+
+    //create list of days
+
+
+    for (let item of response.courses) {
+      let listElem = document.createElement('li');
+      listElem.innerHTML = '' + item.name
+        + '<br>' + item.diets
+        + '<br>' + item.price;
+      targetElement.appendChild(listElem);
+    }
+
+
+    if (response.days.length === 0) {
+      let errorListElem = document.createElement('li');
+      errorListElem.innerHTML = 'Menu not available';
+      targetElement.appendChild(errorListElem);
+    }
+
+
+  } catch (error) {
+    console.log("Error in createDailyMenuElement")
+    console.log(error);
+
+  }
+
+}
+
 
 /**
  * Sets contents nearest restaurant based on location

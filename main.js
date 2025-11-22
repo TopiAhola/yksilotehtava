@@ -4,7 +4,9 @@ import {
   handleAutoLogin,
   getLocation,
   drawMap,
-  setNearestRestaurant, createRestElements
+  setNearestRestaurant,
+  createRestElements,
+  setFavouriteRestaurant
 } from "./functions.js";
 import {setEventHandlers} from './eventhandlers.js';
 import {getRestaurants} from './api.js';

@@ -6,23 +6,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin=""/>
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/map-style.css">
+  <link rel="stylesheet" href="./styles/image-style.css">
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
           crossorigin="" defer></script>
-
   <script src="main.js" type="module" defer></script>
-  <script src="eventhandlers.js" type="module" defer></script>
 </head>
 
 <body>
-
 <header>
   <h1>Restaurants</h1>
 
@@ -44,44 +41,54 @@
   </nav>
 </header>
 
+
+<dialog id="restaurant-dialog">
+  restaurant dialog didn't load...
+</dialog>
+
 <div id="home-view" class="view">
   home-view...
-  <div id="favourite-restaurant-home">
-    <modal id="favourite-menu" show-modal>
+
+  <div id="favourite-restaurant-home" class="favourite-restaurant">
+    <div class="favourite-menu">
       favourite-menu....
-    </modal>
+      <button>Favourite restaurant info</button>
+    </div>
   </div>
 
-  <div id="nearest-restaurant-home">
-    <modal id="favourite-menu" show-modal>
-      favourite-menu....
-    </modal>
+  <div id="nearest-restaurant-home" class="nearest-restaurant">
+    <div class="nearest-menu">
+      nearest-menu....
+      <button>Nearest restaurant info</button>
+    </div>
   </div>
 
   <div id="map-area">
     <div id="map">map here</div>
   </div>
 
-  <dialog id="restaurant-modal-home-view">
-    restaurant modal....
-  </dialog>
 </div>
 
 
 <div id="list-view" class="view" style="display: none">
   list view...
 
-  <div id="favourite-restaurant-list-view">
-    <button>Favourite restaurant info</button>
+  <div id="favourite-restaurant-list" class="favourite-restaurant">
+    <modal class="favourite-menu">
+      favourite-menu....
+      <button>Favourite restaurant info</button>
+    </modal>
   </div>
 
-  <div class="nearest-restaurant-list-view">
-    <button>Nearest restaurant info</button>
+  <div id="nearest-restaurant-list" class="nearest-restaurant">
+    <div class="nearest-menu">
+      nearest-menu....
+      <button>Nearest restaurant info</button>
+    </div>
   </div>
 
 
   <div id="table-area">
-
     <table id="restaurants-table">
       <thead>
       <tr>
@@ -93,18 +100,7 @@
       <!-- add restaurants here -->
       </tbody>
     </table>
-
   </div>
-
-  <!-- modal -->
-  <dialog>
-    <!-- add restaurant info here when restaurant is clicked -->
-  </dialog>
-
-  <dialog id="restaurant-modal-table-area">
-    restaurant modal...
-  </dialog>
-
 </div>
 
 
@@ -149,8 +145,5 @@
 <footer>
   footer...
 </footer>
-
-
 </body>
-
 </html>
