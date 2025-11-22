@@ -61,9 +61,22 @@ td {
   width: 90%;
   height: 90%;
 
+  overflow: hidden;
 }
 
-dialog #menu li {
+#restaurant-dialog-menu-area {
+  max-height: 100%;
+  overflow: scroll;
+}
+
+
+.menuDayHeading {
+  background-color: #5BC0EB;
+  padding: 10px;
+}
+
+
+#restaurant-dialog li {
   padding: 5px;
 }
 

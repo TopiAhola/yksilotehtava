@@ -164,9 +164,13 @@ function createRestElements(restaurantsArray) {
    */
   function createRestaurantDialogEventHandler(restaurant) {
     const handler = (event) => {
+
       //get and reset dialog
       let dialog = document.querySelector('#restaurant-dialog');
-      dialog.innerHTML = ``;
+      let dialogInfoArea = document.querySelector('#restaurant-dialog-info-area');
+      dialogInfoArea.innerHTML = ``;
+      let dialogMenuArea = document.querySelector('#restaurant-dialog-menu-area');
+      dialogMenuArea.innerHTML = ``;
 
       //add close button
       let closeDialogButton = document.createElement('button');
@@ -174,8 +178,7 @@ function createRestElements(restaurantsArray) {
         dialog.close();
       });
       closeDialogButton.innerHTML = 'Close';
-      closeDialogButton.style.fontSize = '1.5em';
-      dialog.appendChild(closeDialogButton);
+      dialogInfoArea.appendChild(closeDialogButton);
 
       //add info
       let paragraph = document.createElement('p');
@@ -188,22 +191,21 @@ function createRestElements(restaurantsArray) {
         + restaurant.phone + '<br><br>'
         + 'Company: ' + restaurant.company + '<br>'
       ;
-      dialog.appendChild(paragraph);
+      dialogInfoArea.appendChild(paragraph);
 
       //add menu, call updateMenu with menu as target
       let dailyMenu = document.createElement('div');
       dailyMenu.id = 'dailyMenu';
-      dialog.appendChild(dailyMenu);
+      dialogMenuArea.appendChild(dailyMenu);
       createDailyMenuElement(dailyMenu, restaurant._id);
 
       //add menu, call updateMenu with menu as target
       let weeklyMenu = document.createElement('div');
       weeklyMenu.id = 'weeklyMenu';
-      dialog.appendChild(weeklyMenu);
+      dialogMenuArea.appendChild(weeklyMenu);
       createWeeklyMenuElement(weeklyMenu, restaurant._id);
 
       dialog.show();
-
     }
 
     return handler;
@@ -267,9 +269,10 @@ async function createWeeklyMenuElement(targetElement, restaurantId) {
       const dayElem = document.createElement('ul');
 
       //heading for a day
-      let dateHeading = document.createElement('p');
-      dateHeading.innerHTML = '' + day.date;
-      dayElem.appendChild(dateHeading);
+      let dayHeading = document.createElement('p');
+      dayHeading.innerHTML = '' + day.date;
+      dayHeading.setAttribute('class', 'menuDayHeading');
+      dayElem.appendChild(dayHeading);
 
       //list of courses for a day
       for (let course of day.courses) {
