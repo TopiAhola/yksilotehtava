@@ -1,6 +1,6 @@
 'use strict';
 
-import {updateUser, getUser, login} from '../api/api.js';
+import {updateUser, getUser, login} from '../api.js';
 
 
 const userDefault = {

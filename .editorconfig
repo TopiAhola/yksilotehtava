@@ -1,9 +1,12 @@
 # Top-most EditorConfig file
 root = true
 
-# File encoding
 [*]
-charset = utf-8
+charset = utf-8 # File encoding
+trim_trailing_whitespace = true # Trailing whitespace
+end_of_line = crlf # Line endings
+insert_final_newline = true # New line at the end of the file
+
 
 # Indentation settings
 [*.js]
@@ -17,18 +20,6 @@ indent_size = 2
 [*.html]
 indent_style = space
 indent_size = 2
-
-# Line endings
-[*]
-end_of_line = crlf
-
-# Trailing whitespace
-[*]
-trim_trailing_whitespace = true
-
-# New line at the end of the file
-[*]
-insert_final_newline = true
 
 # Maximum line length
 [*.{js,css,html}]
