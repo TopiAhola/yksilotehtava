@@ -1,4 +1,4 @@
-import {getUser} from "./api.js";
+import {getUser} from "./api/api.js";
 
 
 const handleAutoLogin = async () => {

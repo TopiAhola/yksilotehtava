@@ -12,17 +12,19 @@ const baseUrl = 'https://media2.edu.metropolia.fi/restaurant';
  */
 async function updateUser(user, token) {
     const url = '/api/v1/users';
+    const options = {
+      method : "PUT",
+      contentType : "application/json",
+      headers: {
+        Authorization : `Bearer ${token}`
+      },
+      body: user
+    }
+  console.log('updateUser: '+baseUrl+url)
+  console.log(options);
 
     try {
-        let response = await fetch(baseUrl+url, {
-            method : "PUT",
-            contentType : "application/json",
-            headers: {
-                authorization : `Bearer ${token}`
-            },
-
-            body : JSON.stringify( user )
-        });
+        let response = await fetch(baseUrl+url, options);
         console.log(response);
 
         if (response.status === 200) {
@@ -49,7 +51,7 @@ async function updateUser(user, token) {
 
 async function getUser(token) {
     const url = '/api/v1/users/token';
-
+    console.log('getUser: '+baseUrl+url);
     try {
         let response = await fetch(baseUrl+url, {
             method : "GET",
@@ -75,12 +77,10 @@ async function getUser(token) {
             return { message : 'error' };
         }
 
-
     } catch (error) {
         console.log(error);
         return { message : 'error' };
     }
-
 }
 
 
