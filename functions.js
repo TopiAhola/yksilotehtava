@@ -262,16 +262,30 @@ async function createWeeklyMenuElement(targetElement, restaurantId) {
     targetElement.appendChild(menuHeading);
 
     //create list of days
+    const dayListElem = document.createElement('ul');
+    for (let day of response.days) {
+      const dayElem = document.createElement('ul');
 
+      //heading for a day
+      let dateHeading = document.createElement('p');
+      dateHeading.innerHTML = '' + day.date;
+      dayElem.appendChild(dateHeading);
 
-    for (let item of response.courses) {
-      let listElem = document.createElement('li');
-      listElem.innerHTML = '' + item.name
-        + '<br>' + item.diets
-        + '<br>' + item.price;
-      targetElement.appendChild(listElem);
+      //list of courses for a day
+      for (let course of day.courses) {
+
+        //individual course
+        let courseElem = document.createElement('li');
+        courseElem.innerHTML = '' + course.name
+          + '<br>' + course.diets
+          + '<br>' + course.price
+        ;
+
+        dayElem.appendChild(courseElem);
+      }
+      dayListElem.appendChild(dayElem);
     }
-
+    targetElement.appendChild(dayListElem);
 
     if (response.days.length === 0) {
       let errorListElem = document.createElement('li');
