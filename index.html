@@ -22,136 +22,135 @@
 </head>
 
 <body>
-<section>
-  <header>
-    <h1>Restaurants</h1>
 
-    <nav id="navbar">
-      navbar here
-      <button id="homeNavigationButton" navigationTarget="home-view">Home
-        button...
-      </button>
-      <button id="listNavigationButton" navigationTarget="list-view">List view
-        button...
-      </button>
-      <button id="profileNavigationButton" navigationTarget="profile-view">
-        Profile
-        button...
-      </button>
-      <button id="loginNavigationButton" navigationTarget="login-view">Login
-        button...
-      </button>
-    </nav>
-  </header>
+<header>
+  <h1>Restaurants</h1>
 
-  <div id="home-view" class="view">
-    home-view...
-    <div id="favourite-restaurant-home">
-      <modal id="favourite-menu" show-modal>
-        favourite-menu....
-      </modal>
-    </div>
+  <nav id="navbar">
+    navbar here
+    <button id="homeNavigationButton" navigationTarget="home-view">Home
+      button...
+    </button>
+    <button id="listNavigationButton" navigationTarget="list-view">List view
+      button...
+    </button>
+    <button id="profileNavigationButton" navigationTarget="profile-view">
+      Profile
+      button...
+    </button>
+    <button id="loginNavigationButton" navigationTarget="login-view">Login
+      button...
+    </button>
+  </nav>
+</header>
 
-    <div id="nearest-restaurant-home">
-      <modal id="favourite-menu" show-modal>
-        favourite-menu....
-      </modal>
-    </div>
+<div id="home-view" class="view">
+  home-view...
+  <div id="favourite-restaurant-home">
+    <modal id="favourite-menu" show-modal>
+      favourite-menu....
+    </modal>
+  </div>
 
-    <div id="map-area">
-      <div id="map">map here</div>
-    </div>
+  <div id="nearest-restaurant-home">
+    <modal id="favourite-menu" show-modal>
+      favourite-menu....
+    </modal>
+  </div>
 
-    <dialog id="restaurant-modal-home-view">
-      restaurant modal....
-    </dialog>
+  <div id="map-area">
+    <div id="map">map here</div>
+  </div>
 
+  <dialog id="restaurant-modal-home-view">
+    restaurant modal....
+  </dialog>
+</div>
+
+
+<div id="list-view" class="view" style="display: none">
+  list view...
+
+  <div id="favourite-restaurant-list-view">
+    <button>Favourite restaurant info</button>
+  </div>
+
+  <div class="nearest-restaurant-list-view">
+    <button>Nearest restaurant info</button>
   </div>
 
 
-  <div id="list-view" class="view" style="display: none">
-    list view...
+  <div id="table-area">
 
-    <div id="favourite-restaurant-list-view">
-      <button>Favourite restaurant info</button>
-    </div>
-
-    <div class="nearest-restaurant-list-view">
-      <button>Nearest restaurant info</button>
-    </div>
-
-
-    <div id="table-area">
-
-      <table id="restaurants-table">
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Address</th>
-        </tr>
-        </thead>
-        <tbody id="restaurants-table-body">
-        <!-- add restaurants here -->
-        </tbody>
-      </table>
-
-    </div>
-
-    <!-- modal -->
-    <dialog>
-      <!-- add restaurant info here when restaurant is clicked -->
-    </dialog>
-
-    <dialog id="restaurant-modal-table-area">
-      restaurant modal...
-    </dialog>
+    <table id="restaurants-table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+      </tr>
+      </thead>
+      <tbody id="restaurants-table-body">
+      <!-- add restaurants here -->
+      </tbody>
+    </table>
 
   </div>
 
+  <!-- modal -->
+  <dialog>
+    <!-- add restaurant info here when restaurant is clicked -->
+  </dialog>
 
-  <div id="profile-view" class="view" style="display: none">
-    profile view...
-    <div id="profile-area">
-      profile shows here
-    </div>
+  <dialog id="restaurant-modal-table-area">
+    restaurant modal...
+  </dialog>
 
+</div>
+
+
+<div id="profile-view" class="view" style="display: none">
+  profile view...
+  <div id="profile-area">
+    profile shows here
+  </div>
+
+</div>
+
+
+<div id="login-view" class="view" style="display: none">
+  login view...
+  <div id="login-area">
+    <form id="login-form">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="submit" value="Login">
+    </form>
   </div>
 
 
-  <div id="login-view" class="view" style="display: none">
-    login view...
-    <div id="login-area">
-      <form id="login-form">
+  <modal id="register-modal" show-modal>
+    register modal...
+    <div id="register-area">
+      <form id="register-form" onsubmit="event.preventDefault();">
         <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="submit" value="Login">
+        <input type="password" name="password1" placeholder="Password"
+               required>
+        <input type="password" name="password2" placeholder="Repeat password"
+               required>
+        <input type="submit" value="Register">
       </form>
     </div>
 
+  </modal>
 
-    <modal id="register-modal" show-modal>
-      register modal...
-      <div id="register-area">
-        <form id="register-form" onsubmit="event.preventDefault();">
-          <input type="text" name="username" placeholder="Username" required>
-          <input type="password" name="password1" placeholder="Password"
-                 required>
-          <input type="password" name="password2" placeholder="Repeat password"
-                 required>
-          <input type="submit" value="Register">
-        </form>
-      </div>
-
-    </modal>
-
-  </div>
+</div>
 
 
-  <footer>
-    footer...
-  </footer>
+<footer>
+  footer...
+</footer>
 
-</section>
+
 </body>
 
 </html>
