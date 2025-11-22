@@ -234,21 +234,28 @@ function setNearestRestaurant(userLocation) {
  * @param user
  * @param restaurants
  */
-function setFavouriteRestaurant(user, restaurants){
+function setFavouriteRestaurant(user, restaurants) {
   console.log('setFavouriteRestaurant');
   console.log(user, restaurants);
-  const favRestaurantId = Number(user.favouriteRestaurant);
-  const favRestaurant = restaurants.find( (r)=> (r === favRestaurantId);
+  try {
+    //const favRestaurantId = Number(user.favouriteRestaurant); //TODO: pitääkö olla numero??
 
-  if (user === null) {
-    console.log('user not logged in');
+    const favRestaurant = restaurants.find((r) => r._id === user.favouriteRestaurant);
 
-  } else if ( favRestaurant === undefined) {
-    console.log('favourite restaurant not found');
+    if (user === null) {
+      console.log('user not logged in');
 
-  } else if (user && favRestaurant) {
-    console.log(user.username +' favourite restaurant '+favRestaurant._id);
+    } else if (favRestaurant === undefined) {
+      console.log('favourite restaurant not found');
 
+    } else if (user && favRestaurant) {
+      console.log(user.username + ' favourite restaurant ' + favRestaurant._id);
+
+      //TODO: create element for fav restrautraasdasd
+
+    }
+  } catch (err) {
+    console.log(err);
   }
 
 }
