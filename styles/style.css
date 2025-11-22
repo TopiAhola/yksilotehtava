@@ -2,13 +2,14 @@ body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
-    background-color: whitesmoke;
+  background-color: whitesmoke;
 
 }
+
 h1 {
-    background-color: whitesmoke;
-    margin: 0;
-    padding: 20px 10px;
+  background-color: whitesmoke;
+  margin: 0;
+  padding: 20px 10px;
 }
 
 table {
@@ -17,7 +18,7 @@ table {
   margin: 0;
   padding: 0;
 
-    background-color: #5BC0EB;
+  background-color: #5BC0EB;
 }
 
 th {
@@ -35,7 +36,7 @@ td {
 
 .highlight {
   background-color: #ffbf00;
-    font-weight: bold;
+  font-weight: bold;
 
 }
 
@@ -52,5 +53,7 @@ dialog {
 }
 
 dialog #menu li {
-    padding: 5px;
+  padding: 5px;
 }
+
+

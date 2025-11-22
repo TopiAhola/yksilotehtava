@@ -34,6 +34,7 @@ const handleAutoLogin = async () => {
  */
 async function getLocation() {
 
+  //wait for promise to resolve with a callback function
   let userLocation = await new Promise((resolve, reject) => {
     //Try getting location
     try {
@@ -56,7 +57,6 @@ async function getLocation() {
 
     } catch (error) {
       console.log("Location error");
-      console.log("Default location used")
       reject(null)
     }
 
@@ -72,28 +72,41 @@ function drawMap(userLocation, restaurants) {
   console.log(userLocation);
   console.log(restaurants);
 
+  //if null location
+  const defaultLocation = false;
+  if (userLocation === null) {
+    console.log('Map default location');
+    const defaultLocation = true;
+    userLocation = [60.2, 24.8];
+  }
+
   let mapDiv = document.querySelector('#map');
-  let map = L.map('map').setView(userLocation, 6);
+  let map = L.map('map').setView(userLocation, 12);
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
+  //custom icon for user //TODO: icons for restaurants
   let redIcon = L.icon(
     {
-      iconUrl: "marker-icon-2x-red.png",
-      shadowUrl: 'leaf-shadow.png',
+      iconUrl: "./assets/marker-icon-2x-red.png",
+      //shadowUrl: 'leaf-shadow.png',
       iconSize: [25, 41],
       shadowSize: [50, 82],
       iconAnchor: [12, 41],
       shadowAnchor: [0, 0],
       popupAnchor: [0, -41]
     });
-  let testMarker = L.marker(userLocation, {icon: redIcon})
-    .addTo(map)
-    .bindPopup(`<h3>You are here</h3><p>${locationText}</p>`)
-    .openPopup();
+
+  //show user location only if location is not default
+  if (!defaultLocation) {
+    let userMarker = L.marker(userLocation, {icon: redIcon})
+      .addTo(map)
+      .bindPopup(`<h3>You are here</h3>`)
+      .openPopup();
+  }
 
 
   for (let r of restaurants) {
