@@ -21,33 +21,32 @@ import restaurantsPlaceholder from "./placeholder.js";
 setEventHandlers();
 
 //see if user token is found, get user, update elements with user's data
-handleAutoLogin()
-  .then(user => setUser(user));
+let user = handleAutoLogin()
 
 //get location
 let userLocation = getLocation();
 
-//get restaurants, use placeholder while waiting for api
-let restaurants = restaurantsPlaceholder;
-restaurants = getRestaurants();
+//get restaurants
+let restaurants = getRestaurants();
 
-//create elements when restaurants are resolved
-restaurants.then(
-  (restaurants) => {
-    createRestElements(restaurants);
-    setFavouriteRestaurant(user, restaurants);
-  }
-);
 
-//update elements when location and restaurants are resolved
-Promise.all([userLocation, restaurants])
-  .then(([uLocation, rest]) => {
+//update elements when promises are resolved
+Promise.all([user, userLocation, restaurants])
+  .then(([user, userLocation, restaurants]) => {
 
-      //draw map, null location uses default map view
-      drawMap(uLocation, rest);
+      //set user
+      setUser(user)
 
       //updates nearest restaurant element, null location uses default element
-      setNearestRestaurant(uLocation, rest);
+      setNearestRestaurant(userLocation, restaurants);
+
+      setFavouriteRestaurant(user, restaurants);
+
+      //create elements when restaurants are resolved
+      createRestElements(restaurants);
+
+      //draw map, null location uses default map view
+      drawMap(userLocation, restaurants);
 
     },
     (error) => {
