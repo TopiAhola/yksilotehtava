@@ -1,6 +1,6 @@
 
 #restaurant-dialog {
-  position: absolute;
+  position: relative;
   top: 0;
   margin: auto;
   background-color: white;
@@ -19,7 +19,6 @@
 
 }
 
-
 .menuDayHeading {
   background-color: #5BC0EB;
   padding: 10px;
@@ -27,5 +26,5 @@
 
 
 #restaurant-dialog li {
-  padding: 5px;
+  padding: 10px;
 }

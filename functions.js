@@ -274,7 +274,7 @@ function createRestElements(restaurantsArray) {
       dialogMenuArea.appendChild(weeklyMenu);
       createWeeklyMenuElement(weeklyMenu, restaurant._id);
 
-      dialog.show();
+      dialog.showModal();
     }
 
     return handler;

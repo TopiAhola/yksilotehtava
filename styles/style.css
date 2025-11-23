@@ -7,19 +7,25 @@ body {
   margin: auto;
 
   padding: 0;
-  background-color: #12355B;
+  background-color: white;
+
+  background-image: url('../assets/red_green_hot_chillis.jpg');
+  /* background-repeat: no-repeat;*/
+  background-size: cover;
+
+
 }
 
 #center {
   display: block;
   margin: auto;
   width: 90%;
-  /*height: 100vh;  rajoittaa liikaa*/
+  height: 100vh;
   min-height: 1200px;
 
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.9);
 
-  /* overflow: hidden; estää listan scrollaamisen*/
+  
 }
 
 header {
@@ -31,12 +37,13 @@ main {
 }
 
 footer {
-  background-color: yellow;
+  background-color: #af696d;
   position: fixed;
   bottom: 0;
 
   display: block;
 
+  height: 200px;
   width: 90%;
 }
 
@@ -48,7 +55,7 @@ Muut
 
 /* header styles */
 h1 {
-  background-color: #FF570A;
+  background-color: #f63043;
   margin: 0;
   padding: 20px 10px;
 }
