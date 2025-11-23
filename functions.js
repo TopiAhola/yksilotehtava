@@ -49,7 +49,7 @@ const handleAutoLogin = async () => {
 function setUser(user) {
   localStorage.setItem('user', JSON.stringify(user));
 
-  //update users favourite restaurant
+  //update users favourite restaurant restaurants Promise has to be resolved
   restaurants.then(
     (restaurants) => {
       setFavouriteRestaurant(user, restaurants);
@@ -61,11 +61,32 @@ function setUser(user) {
 
   //update profile view element
   const profileArea = document.querySelector('#profile-area');
-  profileArea.innerHTML = '';
+  if (user === null) {
+    profileArea.innerHTML = 'Login to see profile information';
+
+  } else {
+    console.log('set user info in profile');
+
+    const userInfo = document.querySelector('#profile-area');
+    userInfo.innerHTML = '<p> Username: ' + user.username + '</p>'
+      + '<p> Email: ' + user.email + '</p>';
+
+
+  }
 
 
 }
 
+
+/*
+* {
+* "username":"asdfghj",
+* "email":"asdfghj@example.com",
+* "favouriteRestaurant":"65f37b9fcf627e00930bbd89",
+* "_id":"691dfde03116ae25faca7f38",
+* "role":"user",
+* "activated":true
+* }*/
 
 /**
  *
@@ -443,8 +464,14 @@ async function setFavouriteRestaurant(user, restaurants) {
       if (user && (user.favouriteRestaurant === undefined)) {
         //user doesn't have a favourite restaurant
         console.log('favourite restaurant not found');
-        document.querySelector('#favourite-restaurant-home').innerHTML = 'Favourite a restaurant and it will show here!';
-        document.querySelector('#favourite-restaurant-list').innerHTML = 'Favourite a restaurant and it will show here!';
+        document.querySelector('#favourite-restaurant-info-home').innerHTML = 'Favourite a restaurant and it will show here!';
+        document.querySelector('#favourite-restaurant-info-list').innerHTML = 'Favourite a restaurant and it will show here!';
+        document.querySelector('#favourite-restaurant-info-profile').innerHTML = 'Favourite a restaurant and it will show here!';
+
+        //clear menus
+        document.querySelector('#favourite-restaurant-home .favourite-daily-menu').innerHTML = '';
+        document.querySelector('#favourite-restaurant-list .favourite-daily-menu').innerHTML = '';
+
 
       } else if (user && (user.favouriteRestaurant !== undefined)) {
         //user has a favourite restaurant
@@ -458,29 +485,31 @@ async function setFavouriteRestaurant(user, restaurants) {
         console.log(user.username + ' favourite restaurant ' + favRestaurant._id);
 
         //create info
-        const info = '' + nearestRestaurant.name + '<br><br>'
+        const info = '' + favRestaurant.name + '<br><br>'
           + 'Address: <br>'
-          + nearestRestaurant.address + '<br>'
-          + nearestRestaurant.postalCode + ' ' + nearestRestaurant.city + '<br><br>'
-          + 'Company: ' + nearestRestaurant.company + '<br>';
+          + favRestaurant.address + '<br>'
+          + favRestaurant.postalCode + ' ' + favRestaurant.city + '<br><br>'
+          + 'Company: ' + favRestaurant.company + '<br>';
 
         //insert info
         document.querySelector('#favourite-restaurant-info-home').innerHTML = info;
         document.querySelector('#favourite-restaurant-info-view').innerHTML = info;
+        document.querySelector('#favourite-restaurant-info-profile').innerHTML = info;
 
         //create elements for nearest menus
         const favouriteMenuHomeView = document.querySelector('#favourite-restaurant-home .favourite-daily-menu');
-        const favouriteMenuListView = document.querySelector('#favourite-restaurant-home .favourite-daily-menu');
+        const favouriteMenuListView = document.querySelector('#favourite-restaurant-list .favourite-daily-menu');
         await createDailyMenuElement(favouriteMenuHomeView, favRestaurantId);
         await createDailyMenuElement(favouriteMenuListView, favRestaurantId);
       }
 
 
     } else {
-      //user is null
+      //user is null, clear elements
       console.log('user is null in setFavouriteRestaurant');
-      document.querySelector('#favourite-restaurant-home').innerHTML = 'Login to see your favourite restaurant.';
-      document.querySelector('#favourite-restaurant-list').innerHTML = 'Login to see your favourite restaurant.';
+      document.querySelector('#favourite-restaurant-info-home').innerHTML = 'Login to see your favourite restaurant.';
+      document.querySelector('#favourite-restaurant-info-list').innerHTML = 'Login to see your favourite restaurant.';
+      document.querySelector('#favourite-restaurant-info-profile').innerHTML = 'Login to see your favourite restaurant.';
     }
 
 
