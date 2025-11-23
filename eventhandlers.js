@@ -78,7 +78,6 @@ function toggleHighlight(event) {
   console.log(event.target + "highlighted");
   event.target.parentElement.classList.add('highlight'); //highlits the row
 
-  //showDialog(event); //TODO: poista tämä?
 }
 
 function loginButtonEvent(event) {
@@ -119,7 +118,6 @@ async function loginFormEvent(event) {
   const username = event.target.username.value.valueOf();
   const password = event.target.password.value.valueOf();
 
-  console.log(username, password); //TODO: remove
   await login(username, password);
 }
 
@@ -130,8 +128,6 @@ async function registerFormEvent(event) {
   const password1 = event.target.password1.value.valueOf();
   const password2 = event.target.password2.value;
   const email = event.target.email.value;
-
-  console.log(username, password1, password2, email); //TODO: remove
 
   if (password1 === password2) {
     await registerUser(username, password1, email);

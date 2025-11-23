@@ -232,7 +232,6 @@ async function getRestaurants() {
 }
 
 
-//TODO: tämä....
 /**
  * Returns the daily menu by restaurant _id when promise resolves.
  * Returns an empty array on error.
