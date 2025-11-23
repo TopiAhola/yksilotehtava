@@ -222,7 +222,12 @@ function createRestElements(restaurantsArray) {
  */
 async function createDailyMenuElement(targetElement, restaurantId) {
   try {
+    console.log('createDailyMenuElement')
     const response = await getDailyMenu(restaurantId)
+    console.log(response);
+
+    //clear targetElement
+    targetElement.innerHTML = '';
 
     console.log(response.courses);
     let menuHeading = document.createElement('h4');
@@ -254,9 +259,12 @@ async function createDailyMenuElement(targetElement, restaurantId) {
 
 async function createWeeklyMenuElement(targetElement, restaurantId) {
   try {
-    const response = await getWeeklyMenu(restaurantId)
     console.log('createWeeklyMenuElement')
+    const response = await getWeeklyMenu(restaurantId)
     console.log(response);
+
+    //clear targetElement
+    targetElement.innerHTML = '';
 
     //week heading
     let menuHeading = document.createElement('h4');
@@ -298,7 +306,7 @@ async function createWeeklyMenuElement(targetElement, restaurantId) {
 
 
   } catch (error) {
-    console.log("Error in createDailyMenuElement")
+    console.log("Error in createWeeklyMenuElement")
     console.log(error);
 
   }
@@ -312,6 +320,8 @@ async function createWeeklyMenuElement(targetElement, restaurantId) {
  */
 function setNearestRestaurant(userLocation) {
   console.log('setNearestRestaurant:' + userLocation);
+
+
 }
 
 /**
@@ -319,15 +329,15 @@ function setNearestRestaurant(userLocation) {
  * @param user
  * @param restaurants
  */
-function setFavouriteRestaurant(user, restaurants) {
+async function setFavouriteRestaurant(user, restaurants) {
   console.log('setFavouriteRestaurant');
   console.log(user, restaurants);
   try {
-    //const favRestaurantId = Number(user.favouriteRestaurant); //TODO: pitääkö olla numero??
+    const favRestaurantId = user.favouriteRestaurant; //TODO: pitääkö olla numero??
 
-    const favRestaurant = restaurants.find((r) => r._id === user.favouriteRestaurant);
+    const favRestaurant = restaurants.find((r) => r._id === favRestaurantId);
 
-    if (user === null) {
+    if (!user) {
       console.log('user not logged in');
 
     } else if (favRestaurant === undefined) {
@@ -336,9 +346,15 @@ function setFavouriteRestaurant(user, restaurants) {
     } else if (user && favRestaurant) {
       console.log(user.username + ' favourite restaurant ' + favRestaurant._id);
 
-      //TODO: create element for fav restrautraasdasd
+      //create element for favourite menu
+      const favouriteMenus = document.querySelectorAll('.favourite-daily-menu');
+      for (element of favouriteMenus) {
+        await createDailyMenuElement(element, favRestaurantId);
+      }
+
 
     }
+
   } catch (err) {
     console.log(err);
   }
