@@ -3,7 +3,9 @@
 import {getDailyMenu, getUser, getWeeklyMenu} from "./api.js";
 import {
   toggleHighlight,
-  closeDialog, favouriteRestaurantButtonEvent
+  closeDialog,
+  favouriteRestaurantButtonEvent,
+  toggleNearestDailyMenu
 } from './eventhandlers.js';
 
 import {restaurants} from './main.js'
@@ -288,7 +290,7 @@ function createRestElements(restaurantsArray) {
         favouriteRestaurantButtonEvent(event)
       });
       dialogButtonArea.appendChild(favouriteButton);
-      
+
 
       //add info
       let paragraph = document.createElement('p');
@@ -467,6 +469,7 @@ async function setNearestRestaurant(userLocation, restaurants) {
 
   } else {
 
+
     //sort restaurants by distance
     const sortedRestaurants = restaurants.map((a) => a).sort((a, b) => compareDistance(userLocation, a, b));
     console.log(sortedRestaurants);
@@ -489,13 +492,21 @@ async function setNearestRestaurant(userLocation, restaurants) {
     nearestRestaurantHomeView.querySelector('.nearest-info').innerHTML = info;
     nearestRestaurantListView.querySelector('.nearest-info').innerHTML = info;
 
+    /*    //add buttons to show menus
+        const toggleMenuButton = document.createElement('button');
+        toggleMenuButton.addEventListener('click', toggleNearestDailyMenu);
+        toggleMenuButton.innerHTML = 'Toggle Daily Menu';
+        //TODO: finish this
+        */
+
+    nearestRestaurantHomeView.querySelector('.nearest-restaurant-button-area').appendChild(toggleMenuButton);
+    nearestRestaurantListView.querySelector('.nearest-restaurant-button-area').appendChild(toggleMenuButton);
+
     //create elements for nearest menus
     const nearestMenuHomeView = nearestRestaurantHomeView.querySelector('.nearest-menu');
     const nearestMenuListView = nearestRestaurantListView.querySelector('.nearest-menu');
     await createDailyMenuElement(nearestMenuHomeView, nearestRestaurant._id);
     await createDailyMenuElement(nearestMenuListView, nearestRestaurant._id);
-
-    //add buttons to show menus
 
 
   }

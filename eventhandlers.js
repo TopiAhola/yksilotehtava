@@ -185,6 +185,25 @@ async function favouriteRestaurantButtonEvent(event) {
   }
 }
 
+function toggleNearestDailyMenu(event) {
+  event.preventDefault();
+  try {
+    //select nearestRestaurant menu
+    const menu = document.querySelector('#nearest-restaurant-list .nearest-menu');
+
+    //toggle visibility
+    if (menu.getAttribute("display") === "none") {
+      menu.setAttribute('display', 'block');
+    } else {
+      menu.setAttribute('display', 'none');
+    }
+
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 /**
  * Sets event handlers for static elements
@@ -219,5 +238,6 @@ export {
   closeDialog,
   toggleHighlight,
   setEventHandlers,
-  favouriteRestaurantButtonEvent
+  favouriteRestaurantButtonEvent,
+  toggleNearestDailyMenu
 };
