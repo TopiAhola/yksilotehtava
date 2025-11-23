@@ -464,8 +464,8 @@ async function setNearestRestaurant(userLocation, restaurants) {
   const nearestRestaurantListView = document.querySelector('#nearest-restaurant-list');
 
   if (userLocation === null) {
-    nearestRestaurantHomeView.innerHTML = 'No restaurants found near you.';
-    nearestRestaurantListView.innerHTML = 'No restaurants found near you.';
+    nearestRestaurantHomeView.innerHTML = 'No restaurants found near you because your location is unknown.';
+    nearestRestaurantListView.innerHTML = 'No restaurants found near you because your location is unknown.';
 
   } else {
 
