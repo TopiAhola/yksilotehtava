@@ -63,6 +63,34 @@ function setUser(user) {
 
   //update profile view element
   setProfileView(user);
+
+  //go to home page
+  displayView("home-view");
+
+}
+
+/**
+ * Sets view to given view class element. Calls hideViews() to hide other views.
+ * @param navigationTarget
+ */
+function displayView(navigationTarget) {
+//hide all views
+  hideViews();
+//display target view
+  document.getElementById(navigationTarget).style.display = 'block';
+//save current view to localstorage
+  localStorage.setItem('navigationTarget', navigationTarget);
+}
+
+
+/**
+ * Hides all view class elements. Used by navigationButtonEvent.
+ */
+function hideViews() {
+  const views = document.querySelectorAll(".view");
+  views.forEach(view => {
+    view.style.display = 'none'
+  });
 }
 
 
@@ -89,6 +117,14 @@ function setProfileView(user) {
   }
 }
 
+
+function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  localStorage.removeItem('navigationTarget');
+  setUser(null);
+
+}
 
 /*
 * {
@@ -477,7 +513,7 @@ async function setFavouriteRestaurant(user, restaurants) {
         //user doesn't have a favourite restaurant
         console.log('favourite restaurant not found');
         document.querySelector('#favourite-restaurant-info-home').innerHTML = 'Favourite a restaurant and it will show here!';
-        document.querySelector('#favourite-restaurant-info-list').innerHTML = 'Favourite a restaurant and it will show here!';
+        document.querySelector('#favourite-restaurant-info-view').innerHTML = 'Favourite a restaurant and it will show here!';
         document.querySelector('#favourite-restaurant-info-profile').innerHTML = 'Favourite a restaurant and it will show here!';
 
         //clear menus
@@ -547,5 +583,8 @@ export {
   setNearestRestaurant,
   setFavouriteRestaurant,
   setUser,
-  setProfileView
+  setProfileView,
+  displayView,
+  hideViews,
+  logout
 }

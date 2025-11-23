@@ -200,7 +200,8 @@ async function registerUser(username, password, email) {
 
     if (response.ok) {
       let responseJson = await response.json();
-      console.log(responseJson.message);
+      console.log(responseJson);
+      setUser(responseJson.data);
 
     } else {
       console.log(response.status + 'error in register');
@@ -212,6 +213,21 @@ async function registerUser(username, password, email) {
     console.log(error);
   }
 }
+
+
+/*
+{
+  "message": "user created",
+  "data": {
+    "username": "qwertyhjk",
+    "email": "qwertyhjk@example.com",
+    "_id": "69234aae3116ae25facb2902",
+    "role": "user",
+    "activated": true
+  },
+  "activationUrl": "https://ethereal.email/message/aQOW3ow8PbMu3rV2aSNKr4GyTc4D4bw4AAAAcm7F6Bjj64KCsZC4KW.ptBY"
+
+ */
 
 
 /////////////////////////////////////////////////////////

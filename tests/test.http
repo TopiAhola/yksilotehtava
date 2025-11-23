@@ -20,9 +20,9 @@ POST https://media2.edu.metropolia.fi/restaurant/api/v1/users
 Content-Type: application/json
 
 {
-"username": "asdfghj",
-"password": "password123",
-"email": "asdfghj@example.com"
+  "username": "qwertyhjk",
+  "password": "password123",
+  "email": "qwertyhjk@example.com"
 }
 
 ### get user info
@@ -36,5 +36,5 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFzZGZnaGoiLCJlbWFpbCI6ImFzZGZnaGpAZXhhbXBsZS5jb20iLCJfaWQiOiI2OTFkZmRlMDMxMTZhZTI1ZmFjYTdmMzgiLCJyb2xlIjoidXNlciIsImFjdGl2YXRlZCI6dHJ1ZSwiaWF0IjoxNzYzNTc0NzMzfQ.smnBOBhGR6nAG0Kfvn0kFHEXxAqwcKlQmkgmm2NbUKM
 
 {
-    "favouriteRestaurant":"65f37b9fcf627e00930bbd89"
+  "favouriteRestaurant": "65f37b9fcf627e00930bbd89"
 }

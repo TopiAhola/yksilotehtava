@@ -3,6 +3,7 @@
 
 //resets and shows dialog
 import {login, registerUser} from "./api.js";
+import {hideViews, logout} from './functions.js';
 
 function showDialog(event) {
   console.log('showDialog');
@@ -88,15 +89,6 @@ function loginButtonEvent(event) {
 /////////////////////////////////////////////////
 //navbar event handlers
 
-/**
- * Hides all view class elements. Used by navigationButtonEvent.
- */
-function hideViews() {
-  const views = document.querySelectorAll(".view");
-  views.forEach(view => {
-    view.style.display = 'none'
-  });
-}
 
 /**
  * Shows view defined in buttons navigationTarget attribute.
@@ -145,7 +137,16 @@ async function registerFormEvent(event) {
   } else {
     alert("Passwords don't match.");
   }
+}
 
+/**
+ * Calls logout() to remove token and user data, set user to null, update elements to default.
+ * @returns {Promise<void>}
+ */
+async function logoutButtonEvent() {
+  console.log('logoutButtonEvent');
+  await logout();
+  alert("Logged out.");
 }
 
 
@@ -167,6 +168,12 @@ function setEventHandlers() {
 
   //register form
   document.querySelector('#register-form').addEventListener('submit', registerFormEvent);
+
+  //logout button
+  document.querySelectorAll('.logout-button')
+    .forEach((
+      button) => button.addEventListener('click', logoutButtonEvent)
+    );
 
 }
 

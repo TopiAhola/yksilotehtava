@@ -17,6 +17,10 @@
   overflow-y: scroll;
 }
 
+.favourite-daily-menu li {
+  list-style-type: none;
+}
+
 
 .nearest-restaurant {
   background-color: #5BC0EB;
@@ -36,4 +40,8 @@
   margin: 10px 0px 10px 0px;
 
   overflow-y: auto;
+}
+
+.nearest-daily-menu li {
+  list-style-type: none;
 }
