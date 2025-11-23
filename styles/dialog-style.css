@@ -14,21 +14,34 @@
 
 }
 
-#restaurant-dialog button {
-  display: block;
+#restaurant-dialog h4 {
+  background-color: #6fa13e;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+#dialog-button-area {
+  display: flex;
+  justify-content: center;
+}
+
+.favourite-button {
   margin: auto;
-  background-color: #FF570A;
+  background-color: #ffbf00;
   width: 33%;
   padding: 20px;
   border-radius: 10px;
 }
 
-#restaurant-dialog h4 {
-  background-color: #FF570A;
-  padding: 10px;
-  text-align: center;
+.close-dialog-button {
+  margin: auto;
+  background-color: #ff0000;
+  width: 33%;
+  padding: 20px;
   border-radius: 10px;
 }
+
 
 #restaurant-dialog-menu-area {
   max-height: 100%;

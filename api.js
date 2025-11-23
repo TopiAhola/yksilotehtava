@@ -51,11 +51,11 @@ async function getUser(token) {
 
 /**
  * Updates user info. User has to be logged in.
- * @param user user object
+ * @param userData object containing new attributes
  * @param token token from login
  * @returns {Promise<any>}
  */
-async function updateUser(user, token) {
+async function updateUser(userData, token) {
   const url = '/api/v1/users';
   const options = {
     method: "PUT",
@@ -63,7 +63,7 @@ async function updateUser(user, token) {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json"
     },
-    body: user
+    body: JSON.stringify(userData)
   }
   console.log('updateUser: ' + baseUrl + url)
   console.log(options);
@@ -75,6 +75,7 @@ async function updateUser(user, token) {
     if (response.status === 200) {
       let responseObject = await response.json();
       console.log(responseObject);
+
       return {
         message: 'success',
         user: responseObject.data
@@ -155,20 +156,6 @@ async function login(username, password) {
   }
 }
 
-/*
-* {
-  "message": "Login successful",
-  "token": "asdasdasdasdas...",
-  "data": {
-    "username": "asdfghj",
-    "email": "asdfghj@example.com",
-    "favouriteRestaurant": "65f37b9fcf627e00930bbd89",
-    "_id": "691dfde03116ae25faca7f38",
-    "role": "user",
-    "activated": true
-  }
-}
-* */
 
 /**
  * Register a user
@@ -213,22 +200,6 @@ async function registerUser(username, password, email) {
     console.log(error);
   }
 }
-
-
-/*
-{
-  "message": "user created",
-  "data": {
-    "username": "qwertyhjk",
-    "email": "qwertyhjk@example.com",
-    "_id": "69234aae3116ae25facb2902",
-    "role": "user",
-    "activated": true
-  },
-  "activationUrl": "https://ethereal.email/message/aQOW3ow8PbMu3rV2aSNKr4GyTc4D4bw4AAAAcm7F6Bjj64KCsZC4KW.ptBY"
-
- */
-
 
 /////////////////////////////////////////////////////////
 //restaurants

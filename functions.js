@@ -3,7 +3,7 @@
 import {getDailyMenu, getUser, getWeeklyMenu} from "./api.js";
 import {
   toggleHighlight,
-  closeDialog
+  closeDialog, favouriteRestaurantButtonEvent
 } from './eventhandlers.js';
 
 import {restaurants} from './main.js'
@@ -101,20 +101,21 @@ function hideViews() {
  */
 function setProfileView(user) {
   const profileArea = document.querySelector('#profile-area');
-  if (user === null) {
+
+  if (user === null || user === undefined) {
     profileArea.innerHTML = 'Login to see profile information';
 
   } else {
     console.log('set user info in profile');
-
     console.log(user);
 
     const userInfo = document.querySelector('#profile-area');
     userInfo.innerHTML = '<p> Username: ' + user['username'] + '</p>'
       + '<p> Email: ' + user.email + '</p>';
 
-
   }
+
+
 }
 
 
@@ -123,21 +124,11 @@ function logout() {
   localStorage.removeItem('user');
   localStorage.removeItem('navigationTarget');
   setUser(null);
-
 }
 
-/*
-* {
-* "username":"asdfghj",
-* "email":"asdfghj@example.com",
-* "favouriteRestaurant":"65f37b9fcf627e00930bbd89",
-* "_id":"691dfde03116ae25faca7f38",
-* "role":"user",
-* "activated":true
-* }*/
 
 /**
- *
+ * Returns Promise that resolves to coordinates or null.
  * @returns {null}
  */
 async function getLocation() {
@@ -244,7 +235,7 @@ function createRestElements(restaurantsArray) {
       let restaurantElement = document.createElement('tr');
       restaurantElement.setAttribute('class', 'restaurant');
       restaurantElement.setAttribute('listIndex', restaurantsArray.indexOf(r).toString());
-      restaurantElement.setAttribute("_id", r._id);
+      restaurantElement.setAttribute("restaurant_id", r._id);
       restaurantElement.addEventListener('click', toggleHighlight);
       restaurantElement.addEventListener('click', createRestaurantDialogEventHandler(r));
 
@@ -272,6 +263,8 @@ function createRestElements(restaurantsArray) {
 
       //get and reset dialog
       let dialog = document.querySelector('#restaurant-dialog');
+      let dialogButtonArea = dialog.querySelector('#dialog-button-area');
+      dialogButtonArea.innerHTML = '';
       let dialogInfoArea = document.querySelector('#restaurant-dialog-info-area');
       dialogInfoArea.innerHTML = ``;
       let dialogMenuArea = document.querySelector('#restaurant-dialog-menu-area');
@@ -279,11 +272,23 @@ function createRestElements(restaurantsArray) {
 
       //add close button
       let closeDialogButton = document.createElement('button');
+      closeDialogButton.innerHTML = 'Close';
+      closeDialogButton.className = 'close-dialog-button';
       closeDialogButton.addEventListener('click', () => {
         dialog.close();
       });
-      closeDialogButton.innerHTML = 'Close';
-      dialogInfoArea.appendChild(closeDialogButton);
+      dialogButtonArea.appendChild(closeDialogButton);
+
+      //add favourite button
+      let favouriteButton = document.createElement('button');
+      favouriteButton.innerHTML = 'Favourite this';
+      favouriteButton.className = 'favourite-button';
+      favouriteButton.setAttribute("restaurant_id", restaurant._id);
+      favouriteButton.addEventListener('click', (event) => {
+        favouriteRestaurantButtonEvent(event)
+      });
+      dialogButtonArea.appendChild(favouriteButton);
+      
 
       //add info
       let paragraph = document.createElement('p');
@@ -533,8 +538,8 @@ async function setFavouriteRestaurant(user, restaurants) {
         console.log(user.username + ' favourite restaurant ' + favRestaurant._id);
 
         //create info
-        const info = '<h3>Your favourite Restaurant</h3>' +
-          +favRestaurant.name + '<br><br>'
+        const info = '<h3>Your favourite Restaurant</h3>'
+          + favRestaurant.name + '<br><br>'
           + 'Address: <br>'
           + favRestaurant.address + '<br>'
           + favRestaurant.postalCode + ' ' + favRestaurant.city + '<br><br>'
@@ -557,7 +562,7 @@ async function setFavouriteRestaurant(user, restaurants) {
       //user is null, clear elements
       console.log('user is null in setFavouriteRestaurant');
       document.querySelector('#favourite-restaurant-info-home').innerHTML = 'Login to see your favourite restaurant.';
-      document.querySelector('#favourite-restaurant-info-list').innerHTML = 'Login to see your favourite restaurant.';
+      document.querySelector('#favourite-restaurant-info-view').innerHTML = 'Login to see your favourite restaurant.';
       document.querySelector('#favourite-restaurant-info-profile').innerHTML = 'Login to see your favourite restaurant.';
     }
 
@@ -565,12 +570,6 @@ async function setFavouriteRestaurant(user, restaurants) {
   } catch (err) {
     console.log(err);
   }
-
-}
-
-
-function updateFavouriteRestaurant() {
-
 
 }
 

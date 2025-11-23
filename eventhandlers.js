@@ -2,8 +2,9 @@
 
 
 //resets and shows dialog
-import {login, registerUser} from "./api.js";
-import {hideViews, logout} from './functions.js';
+import {getUser, login, registerUser, updateUser} from "./api.js";
+import {hideViews, logout, setUser} from './functions.js';
+import {user} from "./main.js";
 
 function showDialog(event) {
   console.log('showDialog');
@@ -149,6 +150,41 @@ async function logoutButtonEvent() {
   alert("Logged out.");
 }
 
+async function favouriteRestaurantButtonEvent(event) {
+  try {
+    event.preventDefault();
+    console.log('favouriteRestaurantButtonEvent');
+    const restaurant_id = event.target.getAttribute("restaurant_id");
+
+    //import user from main
+    const token = localStorage.getItem('token');
+    if (user !== null && token) {
+      console.log('update favourite: ' + user.username + ' ' + restaurant_id);
+      const success = await updateUser({favouriteRestaurant: restaurant_id}, token);
+
+      if (success.message === 'success') {
+        //get updated user data, update elements
+        getUser(token).then(user => {
+          setUser(user)
+        });
+
+      } else if (success.message === 'badLogin') {
+        alert("Log in to favourite restaurants");
+      } else if (success.message === 'error') {
+        alert("Error");
+      }
+
+
+    } else {
+      console.log('cannot set favourite: user is not logged in');
+    }
+
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 /**
  * Sets event handlers for static elements
@@ -183,4 +219,5 @@ export {
   closeDialog,
   toggleHighlight,
   setEventHandlers,
+  favouriteRestaurantButtonEvent
 };

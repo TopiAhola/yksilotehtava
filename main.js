@@ -55,7 +55,7 @@ Promise.all([user, userLocation, restaurants])
     }
   );
 
-export {restaurants};
+export {restaurants, user};
 
 
 
