@@ -346,16 +346,19 @@ async function createDailyMenuElement(targetElement, restaurantId) {
     menuHeading.innerHTML = 'Daily menu';
     targetElement.appendChild(menuHeading);
 
+    //create list
+    const unorderedList = document.createElement('ul');
     for (let item of response.courses) {
       let listElem = document.createElement('li');
       listElem.innerHTML = '<p>' + item.name + '</p>'
         + '<p>' + item.diets + '</p>'
         + '<p>' + item.price + '</p>';
-      targetElement.appendChild(listElem);
+      unorderedList.appendChild(listElem);
     }
+    targetElement.appendChild(unorderedList);
 
     if (response.courses.length === 0) {
-      let errorListElem = document.createElement('li');
+      let errorListElem = document.createElement('p');
       errorListElem.innerHTML = 'Menu not available';
       targetElement.appendChild(errorListElem);
     }
