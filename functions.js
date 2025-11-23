@@ -15,12 +15,18 @@ const handleAutoLogin = async () => {
 
     //if token exists, get user data from API
     if (token) {
-      const userByToken = await getUser(token);
+      console.log('token found by handleAutoLogin')
+      const response = await getUser(token);
 
-      //set user to state
-      if (userByToken) {
-        setUser(userByToken);
+      if (response.message === 'success') {
+        console.log('user found in handleAutoLogin');
+        return response.user;
+
+      } else {
+        console.log('no user found in handleAutoLogin');
+        return null;
       }
+
 
     } else {
       console.log('No token');
@@ -30,6 +36,20 @@ const handleAutoLogin = async () => {
     console.log(e.message);
   }
 };
+
+
+/**
+ * Sets the user after login or update.
+ * @param user
+ */
+function setUser(user) {
+
+
+  setProfileView(user);
+
+
+}
+
 
 /**
  *
@@ -313,19 +333,83 @@ async function createWeeklyMenuElement(targetElement, restaurantId) {
 
 }
 
+/**
+ * Calculates distence between two coordinate points. Unit of distance is arbitrary.
+ * Input is coordinate array [lat,lon]
+ * @param coordinates1
+ * @param coordinates2
+ * @returns {number}
+ */
+function calculateDistance(coordinates1, coordinates2) {
+  return Math.sqrt(Math.pow((coordinates1[0] - coordinates2[0]), 2) + Math.pow((coordinates1[1] - coordinates2[1]), 2));
+}
 
 /**
- * Sets contents nearest restaurant based on location
- * @param userLocation
+ * Sorting function for sorting restaurants based on distance from user.
+ * @param userLocation coordinate array
+ * @param restaurant1 coordinate array
+ * @param restaurant2 coordinate array
+ * @returns {number} comparison number for sort method
  */
-function setNearestRestaurant(userLocation) {
+function compareDistance(userLocation, restaurant1, restaurant2) {
+  return calculateDistance(userLocation, restaurant1) - calculateDistance(userLocation, restaurant2);
+
+}
+
+
+/**
+ * Sets contents of nearest restaurant element based on user location. Null location creates default element.
+ * @param userLocation Coordinates array
+ * @param restaurants Restaurants array
+ */
+async function setNearestRestaurant(userLocation, restaurants) {
   console.log('setNearestRestaurant:' + userLocation);
+  const nearestRestaurantHomeView = document.querySelector('#nearest-restaurant-home');
+  const nearestRestaurantListView = document.querySelector('#nearest-restaurant-list');
+
+  if (userLocation === null) {
+    nearestRestaurantHomeView.innerHTML = 'No restaurants found near you.';
+    nearestRestaurantListView.innerHTML = 'No restaurants found near you.';
+
+  } else {
+
+    //sort restaurants by distance
+    const sortedRestaurants = restaurants.map((a) => a).sort((a, b) => compareDistance(userLocation, a, b));
+    console.log(sortedRestaurants);
+
+    //get id of closest restaurant
+    const nearestRestaurant = sortedRestaurants[0];
+
+    //create info
+    /* let paragraph = document.createElement('p');*/
+
+    const info = '' + nearestRestaurant.name + '<br><br>'
+      + 'Address: <br>'
+      + nearestRestaurant.address + '<br>'
+      + nearestRestaurant.postalCode + ' ' + nearestRestaurant.city + '<br><br>'
+      + 'Company: ' + nearestRestaurant.company + '<br>'
+    ;
+
+    //insert info
+    nearestRestaurantHomeView.querySelector('.nearest-info').innerHTML = info;
+    nearestRestaurantListView.querySelector('.nearest-info').innerHTML = info;
+
+    //create elements for nearest menus
+    const nearestMenuHomeView = nearestRestaurantHomeView.querySelector('.nearest-menu');
+    const nearestMenuListView = nearestRestaurantListView.querySelector('.nearest-menu');
+    await createDailyMenuElement(nearestMenuHomeView, nearestRestaurant._id);
+    await createDailyMenuElement(nearestMenuListView, nearestRestaurant._id);
+
+    //add buttons to show menus
+
+
+  }
 
 
 }
 
 /**
- * Sets content to favouriterestaurant element based on users data.
+ * Sets content to favourite restaurant element based on users data.
  * @param user
  * @param restaurants
  */
@@ -368,5 +452,6 @@ export {
   drawMap,
   createRestElements,
   setNearestRestaurant,
-  setFavouriteRestaurant
+  setFavouriteRestaurant,
+  setUser
 }

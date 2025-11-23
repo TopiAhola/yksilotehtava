@@ -1,0 +1,52 @@
+/*
+#favourite-restaurant-home {
+  background-color: #eb8a90;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+}
+
+#nearest-restaurant-home {
+  background-color: #5BC0EB;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+}
+
+
+#favourite-restaurant-list {
+  background-color: #eb8a90;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+}
+
+#nearest-restaurant-list {
+  background-color: #5BC0EB;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+}*/
+
+
+.favourite-restaurant {
+  background-color: #eb8a90;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+}
+
+.nearest-restaurant {
+  background-color: #5BC0EB;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+}
+
+.favourite-menu {
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+  overflow-y: scroll;
+}
+
+.nearest-menu {
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+  overflow-y: scroll;
+}

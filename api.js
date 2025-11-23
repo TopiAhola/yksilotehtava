@@ -10,6 +10,52 @@ const baseUrl = 'https://media2.edu.metropolia.fi/restaurant';
 
 
 /**
+ * Returns user data based on token or an error message.
+ *
+ * { message: 'success', user: responseObject.data }
+ *
+ * {message: 'badLogin'}
+ *
+ * {message: 'error'}
+ * @param token
+ * @returns {Promise<{message: string, user}|{message: string}>}
+ */
+async function getUser(token) {
+  const url = '/api/v1/users/token';
+  console.log('getUser: ' + baseUrl + url);
+  try {
+    let response = await fetch(baseUrl + url, {
+      method: "GET",
+      contentType: "application/json",
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    });
+    console.log(response);
+
+    if (response.status === 200) {
+      let responseObject = await response.json();
+      console.log(responseObject);
+      return {
+        message: 'success',
+        user: responseObject.data
+      };
+
+    } else if (response.status === 403) {
+      return {message: 'badLogin'};
+
+    } else {
+      return {message: 'error'};
+    }
+
+  } catch (error) {
+    console.log(error);
+    return {message: 'error'};
+  }
+}
+
+
+/**
  * Updates user info. User has to be logged in.
  * @param user user object
  * @param token token from login
@@ -54,48 +100,16 @@ async function updateUser(user, token) {
   }
 }
 
+
 /**
- * Returns user data based on token.
+ * Deletes user from api
+ * @param user
  * @param token
- * @returns {Promise<{message: string, user}|{message: string}>}
+ * @returns {Promise<void>}
  */
-async function getUser(token) {
-  const url = '/api/v1/users/token';
-  console.log('getUser: ' + baseUrl + url);
-  try {
-    let response = await fetch(baseUrl + url, {
-      method: "GET",
-      contentType: "application/json",
-      headers: {
-        authorization: `Bearer ${token}`
-      }
-    });
-    console.log(response);
-
-    if (response.status === 200) {
-      let responseObject = await response.json();
-      console.log(responseObject);
-      return {
-        message: 'success',
-        user: responseObject.data
-      };
-
-    } else if (response.status === 403) {
-      return {message: 'badLogin'};
-
-    } else {
-      return {message: 'error'};
-    }
-
-  } catch (error) {
-    console.log(error);
-    return {message: 'error'};
-  }
-}
-
-
 async function deleteUser(user, token) {
 }
+
 
 /**
  *

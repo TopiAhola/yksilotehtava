@@ -14,7 +14,7 @@ body {
   display: block;
   margin: auto;
   width: 90%;
-  height: 100vh;
+  /*height: 100vh;  rajoittaa liikaa*/
   min-height: 1200px;
 
   background-color: white;
@@ -94,17 +94,6 @@ nav button:active {
   /* display: block;*/
 }
 
-#favourite-restaurant-home {
-  background-color: #eb8a90;
-  border-radius: 10px 10px 10px 10px;
-  padding: 10px;
-}
-
-#nearest-restaurant-home {
-  background-color: #5BC0EB;
-  border-radius: 10px 10px 10px 10px;
-  padding: 10px;
-}
 
 #map-area {
   height: 500px;
@@ -125,17 +114,6 @@ nav button:active {
   margin: 10px 0 10px 0;
 }
 
-#favourite-restaurant-list {
-  background-color: #eb8a90;
-  border-radius: 10px 10px 10px 10px;
-  padding: 10px;
-}
-
-#nearest-restaurant-list {
-  background-color: #5BC0EB;
-  border-radius: 10px 10px 10px 10px;
-  padding: 10px;
-}
 
 #table-area {
   width: 100%;

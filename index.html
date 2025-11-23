@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="./styles/dialog-style.css">
   <link rel="stylesheet" href="./styles/image-style.css">
+  <link rel="stylesheet" href="./styles/restaurant-box-style.css">
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
@@ -42,6 +43,7 @@
   </header>
 
   <main id="main-section">
+
     <dialog id="restaurant-dialog">
       <div id="restaurant-dialog-info-area">restaurant info didn't load...</div>
       <div id="restaurant-dialog-menu-area">restaurant menu didn't load...</div>
@@ -65,14 +67,8 @@
       </div>
 
       <div id="nearest-restaurant-home" class="nearest-restaurant">
-        <div class="nearest-menu">
-          nearest-menu....
-        </div>
-        <button>Nearest restaurant info</button>
-        <div class="nearest-weekly-menu">
-          weekly menu didn't load...
-        </div>
-
+        <div class="nearest-info"></div>
+        <div class="nearest-menu"></div>
       </div>
 
       <div id="map-area">
@@ -100,10 +96,8 @@
       </div>
 
       <div id="nearest-restaurant-list" class="nearest-restaurant">
-        <div class="nearest-menu">
-          nearest-menu....
-        </div>
-        <button>Nearest restaurant info</button>
+        <div class="nearest-info"></div>
+        <div class="nearest-menu"></div>
       </div>
 
 

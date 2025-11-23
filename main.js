@@ -6,8 +6,10 @@ import {
   drawMap,
   setNearestRestaurant,
   createRestElements,
-  setFavouriteRestaurant
+  setFavouriteRestaurant,
+  setUser
 } from "./functions.js";
+
 import {setEventHandlers} from './eventhandlers.js';
 import {getRestaurants} from './api.js';
 import restaurantsPlaceholder from "./placeholder.js";
@@ -15,22 +17,23 @@ import restaurantsPlaceholder from "./placeholder.js";
 ////////////////////////////////////////////////////
 //main
 
-//aseta event handlerit
+//sets event handlers to html elements
 setEventHandlers();
 
-//tarkista onko tokenia
+//see if token is found, update the user
 const user = handleAutoLogin();
+user.then(user => {
+  setUser(user);
+});
 
-//navigoi navigationTarget localstoragen perusteella??
-
-//tarkista sijainti
+//get location
 let userLocation = getLocation();
 
-//hae ravintolat
+//get restaurants, use placeholder while waiting for api
 let restaurants = restaurantsPlaceholder;
 restaurants = getRestaurants();
 
-//kun ravintolat saapuvat piirrä ne
+//create elements when restaurants are resolved
 restaurants.then(
   (restaurants) => {
     createRestElements(restaurants);
@@ -38,16 +41,15 @@ restaurants.then(
   }
 );
 
-//odota sijaintia ja ravintoloita
+//update elements when location and restaurants are resolved
 Promise.all([userLocation, restaurants])
-  .then(([ul, r]) => {
-    //sitten piirrä kartta
-    drawMap(ul, r);
+  .then(([ulocation, rest]) => {
 
-    //lataa lähin ravintola jos sijainti on tiedossa
-    if (!userLocation === null) {
-      setNearestRestaurant(userLocation);
-    }
+    //draw map, null location uses default map view
+    drawMap(ulocation, rest);
+
+    //updates nearest restaurant element, null location uses default element
+    setNearestRestaurant(ulocation, rest);
   });
 
 
