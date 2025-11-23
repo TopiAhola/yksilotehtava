@@ -1,7 +1,4 @@
-/*
-Rakenne
-*/
-
+/* ///////////// Structure ///////////// */
 body {
   font-family: sans-serif;
   margin: auto;
@@ -12,7 +9,6 @@ body {
   background-image: url('../assets/red_green_hot_chillis.jpg');
   /* background-repeat: no-repeat;*/
   background-size: cover;
-
 }
 
 #center {
@@ -24,13 +20,11 @@ body {
 
   padding: 0px 10px 0px 10px;
   background-color: rgba(255, 255, 255, 0.8);
-
 }
 
 header {
   width: 100%;
 }
-
 
 .view {
   background-color: rgba(255, 255, 255, 0.8);
@@ -38,20 +32,7 @@ header {
 }
 
 
-/*
-main {
-  flex: 1;
-}
-
-*/
-
-
-/*
-Muut
-*/
-
-
-/* header styles */
+/*///////////// header styles /////////////*/
 h1 {
   background-color: #f63043;
   margin: 0;
@@ -95,7 +76,7 @@ nav button:active {
   color: red;
 }
 
-/* home-view styles */
+/*///////////// home-view styles /////////////*/
 #home-view {
 
 }
@@ -117,9 +98,7 @@ nav button:active {
 }
 
 
-/* list-view styles */
-
-
+/*///////////// list-view styles ///////////// */
 #table-area {
   width: 100%;
   overflow-y: scroll;
@@ -154,11 +133,5 @@ td {
   background-color: #ffbf00;
   font-weight: bold;
 }
-
-/* profile-view styles */
-
-
-/* login-view styles */
-
 
 

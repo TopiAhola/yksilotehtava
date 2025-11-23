@@ -4,10 +4,18 @@
   margin: 20px;
 }
 
-
-#login-view button {
+#login-view form button {
   display: block;
-  
+  padding: 10px;
+  width: 100%;
+
+}
+
+#login-view form label {
+  display: block;
+  padding: 10px;
+  width: 33%;
+
 }
 
 #login-view form input {
