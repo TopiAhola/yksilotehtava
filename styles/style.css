@@ -100,11 +100,6 @@ nav button:active {
 
 }
 
-#home-view > * {
-  margin: 20px 10px 20px 10px;
-
-  /* display: block;*/
-}
 
 #map-area {
   background-color: darkolivegreen;
@@ -123,10 +118,6 @@ nav button:active {
 
 
 /* list-view styles */
-
-#list-view * {
-  margin: 10px 0 10px 0;
-}
 
 
 #table-area {

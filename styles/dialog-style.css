@@ -11,6 +11,23 @@
   height: 100%;
 
   overflow: hidden;
+
+}
+
+#restaurant-dialog button {
+  display: block;
+  margin: auto;
+  background-color: #FF570A;
+  width: 33%;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+#restaurant-dialog h4 {
+  background-color: #FF570A;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
 }
 
 #restaurant-dialog-menu-area {

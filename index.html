@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="./styles/dialog-style.css">
   <link rel="stylesheet" href="./styles/restaurant-box-style.css">
+  <link rel="stylesheet" href="./styles/login-style.css">
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
@@ -42,7 +43,7 @@
 
   <main id="main-section">
 
-    <dialog id="restaurant-dialog">
+    <dialog id="restaurant-dialog" closedby="any">
       <div id="restaurant-dialog-info-area">restaurant info didn't load...</div>
       <div id="restaurant-dialog-menu-area">restaurant menu didn't load...</div>
     </dialog>
@@ -79,7 +80,7 @@
       <h2>All Restaurants</h2>
 
       <div id="favourite-restaurant-list" class="favourite-restaurant">
-       
+
         <div id="favourite-restaurant-info-view"
              class="favourite-restaurant-info">
           Your favourite restaurant shows here!
@@ -132,7 +133,7 @@
       <h2>Login</h2>
 
       <div id="login-area">
-        login area...
+
         <form id="login-form">
           <input type="text" name="username" placeholder="Username" required>
           <input type="password" name="password" placeholder="Password"
@@ -143,7 +144,7 @@
 
 
       <div id="register-area">
-        register area...
+        Register New User
         <form id="register-form">
           <input type="text" name="username" placeholder="Username" required>
           <input type="password" name="password1" placeholder="Password"

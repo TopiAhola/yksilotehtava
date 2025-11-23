@@ -1,39 +1,13 @@
-/*
-#favourite-restaurant-home {
-  background-color: #eb8a90;
-  border-radius: 10px 10px 10px 10px;
-  padding: 10px;
-}
-
-#nearest-restaurant-home {
-  background-color: #5BC0EB;
-  border-radius: 10px 10px 10px 10px;
-  padding: 10px;
-}
-
-
-#favourite-restaurant-list {
-  background-color: #eb8a90;
-  border-radius: 10px 10px 10px 10px;
-  padding: 10px;
-}
-
-#nearest-restaurant-list {
-  background-color: #5BC0EB;
-  border-radius: 10px 10px 10px 10px;
-  padding: 10px;
-}*/
-
 
 .favourite-restaurant {
-  background-color: red;
+  background-color: #fb4258;
   border-radius: 10px 10px 10px 10px;
   padding: 10px;
-  margin: 20px 10px 10px 10px;
+  margin: 10px 0px 10px 0px;
 }
 
 .favourite-restaurant h3 {
-  color: red;
+
 }
 
 .favourite-menu {
@@ -48,15 +22,18 @@
   background-color: #5BC0EB;
   border-radius: 10px 10px 10px 10px;
   padding: 10px;
+  margin: 10px 0px 10px 0px;
 }
 
 .nearest-restaurant h3 {
-  background-color: #306680;
+
 }
 
 .nearest-menu {
   background-color: white;
   border-radius: 10px 10px 10px 10px;
   padding: 10px;
-  overflow-y: scroll;
+  margin: 10px 0px 10px 0px;
+
+  overflow-y: auto;
 }

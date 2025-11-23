@@ -497,7 +497,8 @@ async function setFavouriteRestaurant(user, restaurants) {
         console.log(user.username + ' favourite restaurant ' + favRestaurant._id);
 
         //create info
-        const info = '' + favRestaurant.name + '<br><br>'
+        const info = '<h3>Your favourite Restaurant</h3>' +
+          +favRestaurant.name + '<br><br>'
           + 'Address: <br>'
           + favRestaurant.address + '<br>'
           + favRestaurant.postalCode + ' ' + favRestaurant.city + '<br><br>'
@@ -528,6 +529,12 @@ async function setFavouriteRestaurant(user, restaurants) {
   } catch (err) {
     console.log(err);
   }
+
+}
+
+
+function updateFavouriteRestaurant() {
+
 
 }
 

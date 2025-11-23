@@ -1,0 +1,15 @@
+#login-view form {
+  display: block;
+
+  margin: 20px;
+}
+
+
+#login-view button {
+  display: block;
+  
+}
+
+#login-view form input {
+  display: block;
+}
