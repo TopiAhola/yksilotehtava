@@ -12,14 +12,8 @@ const baseUrl = 'https://media2.edu.metropolia.fi/restaurant';
 
 /**
  * Returns user data based on token or an error message.
- *
- * { message: 'success', user: responseObject.data }
- *
- * {message: 'badLogin'}
- *
- * {message: 'error'}
  * @param token
- * @returns {Promise<{message: string, user}|{message: string}>}
+ * @returns {Promise<*|null>}
  */
 async function getUser(token) {
   const url = '/api/v1/users/token';
@@ -37,21 +31,20 @@ async function getUser(token) {
     if (response.status === 200) {
       let responseObject = await response.json();
       console.log(responseObject);
-      return {
-        message: 'success',
-        user: responseObject.data
-      };
+
+      return responseObject.data;
 
     } else if (response.status === 403) {
-      return {message: 'badLogin'};
+      console.log(response.status + ' in getUser');
+      return null;
 
     } else {
-      return {message: 'error'};
+      return null;
     }
 
   } catch (error) {
     console.log(error);
-    return {message: 'error'};
+    return null;
   }
 }
 

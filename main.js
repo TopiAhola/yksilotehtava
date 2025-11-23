@@ -7,7 +7,8 @@ import {
   setNearestRestaurant,
   createRestElements,
   setFavouriteRestaurant,
-  setUser
+  setUser,
+  setProfileView
 } from "./functions.js";
 
 import {setEventHandlers} from './eventhandlers.js';
@@ -33,6 +34,9 @@ let restaurants = getRestaurants();
 //update elements when promises are resolved
 Promise.all([user, userLocation, restaurants])
   .then(([user, userLocation, restaurants]) => {
+
+      //update profile elements
+      setProfileView(user);
 
       //updates nearest restaurant element, null location uses default element
       setNearestRestaurant(userLocation, restaurants);

@@ -9,7 +9,7 @@ import {
 import {restaurants} from './main.js'
 
 
-const handleAutoLogin = async () => {
+async function handleAutoLogin() {
   try {
 
     //get token from local storage
@@ -18,11 +18,13 @@ const handleAutoLogin = async () => {
     //if token exists, get user data from API
     if (token) {
       console.log('token found by handleAutoLogin')
-      const response = await getUser(token);
+      const user = await getUser(token);
 
-      if (response.message === 'success') {
+
+      if (user) {
         console.log('user found in handleAutoLogin');
-        return response.user;
+        console.log(user);
+        return user;
 
       } else {
         console.log('no user found in handleAutoLogin');
@@ -39,7 +41,7 @@ const handleAutoLogin = async () => {
     console.log(e.message);
     return null;
   }
-};
+}
 
 
 /**
@@ -60,6 +62,16 @@ function setUser(user) {
   );
 
   //update profile view element
+  setProfileView(user);
+}
+
+
+/**
+ * Sets profile view content based on user.
+ * Null user results in default element.
+ * @param user
+ */
+function setProfileView(user) {
   const profileArea = document.querySelector('#profile-area');
   if (user === null) {
     profileArea.innerHTML = 'Login to see profile information';
@@ -67,14 +79,14 @@ function setUser(user) {
   } else {
     console.log('set user info in profile');
 
+    console.log(user);
+
     const userInfo = document.querySelector('#profile-area');
-    userInfo.innerHTML = '<p> Username: ' + user.username + '</p>'
+    userInfo.innerHTML = '<p> Username: ' + user['username'] + '</p>'
       + '<p> Email: ' + user.email + '</p>';
 
 
   }
-
-
 }
 
 
@@ -527,5 +539,6 @@ export {
   createRestElements,
   setNearestRestaurant,
   setFavouriteRestaurant,
-  setUser
+  setUser,
+  setProfileView
 }
