@@ -20,11 +20,9 @@ import restaurantsPlaceholder from "./placeholder.js";
 //sets event handlers to html elements
 setEventHandlers();
 
-//see if token is found, update the user
-const user = handleAutoLogin();
-user.then(user => {
-  setUser(user);
-});
+//see if user token is found, get user, update elements with user's data
+handleAutoLogin()
+  .then(user => setUser(user));
 
 //get location
 let userLocation = getLocation();
@@ -43,14 +41,19 @@ restaurants.then(
 
 //update elements when location and restaurants are resolved
 Promise.all([userLocation, restaurants])
-  .then(([ulocation, rest]) => {
+  .then(([uLocation, rest]) => {
 
-    //draw map, null location uses default map view
-    drawMap(ulocation, rest);
+      //draw map, null location uses default map view
+      drawMap(uLocation, rest);
 
-    //updates nearest restaurant element, null location uses default element
-    setNearestRestaurant(ulocation, rest);
-  });
+      //updates nearest restaurant element, null location uses default element
+      setNearestRestaurant(ulocation, rest);
+
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
 
 
 

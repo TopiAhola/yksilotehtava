@@ -43,11 +43,8 @@ const handleAutoLogin = async () => {
  * @param user
  */
 function setUser(user) {
-
-
-  setProfileView(user);
-
-
+  localStorage.setItem('user', JSON.stringify(user));
+  // setProfileView(user); //TODO: update document with user info
 }
 
 
@@ -347,12 +344,16 @@ function calculateDistance(coordinates1, coordinates2) {
 /**
  * Sorting function for sorting restaurants based on distance from user.
  * @param userLocation coordinate array
- * @param restaurant1 coordinate array
- * @param restaurant2 coordinate array
+ * @param restaurant1 restaurant object
+ * @param restaurant2 restaurant object
  * @returns {number} comparison number for sort method
  */
 function compareDistance(userLocation, restaurant1, restaurant2) {
-  return calculateDistance(userLocation, restaurant1) - calculateDistance(userLocation, restaurant2);
+  //restaurant data has coordinates in different order....
+  return (
+    calculateDistance(userLocation, [restaurant1.location.coordinates[1], restaurant1.location.coordinates[0]])
+    - calculateDistance(userLocation, [restaurant2.location.coordinates[1], restaurant2.location.coordinates[0]])
+  )
 
 }
 
@@ -379,6 +380,7 @@ async function setNearestRestaurant(userLocation, restaurants) {
 
     //get id of closest restaurant
     const nearestRestaurant = sortedRestaurants[0];
+    console.log('nearest distance: ' + calculateDistance(userLocation, nearestRestaurant));
 
     //create info
     /* let paragraph = document.createElement('p');*/
@@ -405,7 +407,6 @@ async function setNearestRestaurant(userLocation, restaurants) {
 
   }
 
-
 }
 
 /**
@@ -417,27 +418,46 @@ async function setFavouriteRestaurant(user, restaurants) {
   console.log('setFavouriteRestaurant');
   console.log(user, restaurants);
   try {
-    const favRestaurantId = user.favouriteRestaurant; //TODO: pitääkö olla numero??
+    if (user !== null) {
+      const favRestaurantId = user.favouriteRestaurant; //TODO: pitääkö olla numero??
+      const favRestaurant = restaurants.find((r) => r._id === favRestaurantId);
 
-    const favRestaurant = restaurants.find((r) => r._id === favRestaurantId);
+      if (user && (favRestaurant === undefined)) {
+        //user doesn't have a favourite restaurant
+        console.log('favourite restaurant not found');
+        document.querySelector('#favourite-restaurant-home').innerHTML = 'Favourite a restaurant and it will show here!';
+        document.querySelector('#favourite-restaurant-list').innerHTML = 'Favourite a restaurant and it will show here!';
 
-    if (!user) {
-      console.log('user not logged in');
+      } else if (user && (favRestaurant !== undefined)) {
+        //show users favourite restaurant
+        console.log(user.username + ' favourite restaurant ' + favRestaurant._id);
 
-    } else if (favRestaurant === undefined) {
-      console.log('favourite restaurant not found');
+        //create info
+        const info = '' + nearestRestaurant.name + '<br><br>'
+          + 'Address: <br>'
+          + nearestRestaurant.address + '<br>'
+          + nearestRestaurant.postalCode + ' ' + nearestRestaurant.city + '<br><br>'
+          + 'Company: ' + nearestRestaurant.company + '<br>';
 
-    } else if (user && favRestaurant) {
-      console.log(user.username + ' favourite restaurant ' + favRestaurant._id);
+        //insert info
+        document.querySelector('#favourite-restaurant-info-home').innerHTML = info;
+        document.querySelector('#favourite-restaurant-info-view').innerHTML = info;
 
-      //create element for favourite menu
-      const favouriteMenus = document.querySelectorAll('.favourite-daily-menu');
-      for (element of favouriteMenus) {
-        await createDailyMenuElement(element, favRestaurantId);
+        //create elements for nearest menus
+        const favouriteMenuHomeView = document.querySelector('#favourite-restaurant-home .favourite-daily-menu');
+        const favouriteMenuListView = document.querySelector('#favourite-restaurant-home .favourite-daily-menu');
+        await createDailyMenuElement(favouriteMenuHomeView, favRestaurantId);
+        await createDailyMenuElement(favouriteMenuListView, favRestaurantId);
       }
 
 
+    } else {
+      //user is null
+      console.log('user not logged in');
+      document.querySelector('#favourite-restaurant-home').innerHTML = 'Login to see your favourite restaurant.';
+      document.querySelector('#favourite-restaurant-list').innerHTML = 'Login to see your favourite restaurant.';
     }
+
 
   } catch (err) {
     console.log(err);
