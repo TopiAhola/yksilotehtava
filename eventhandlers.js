@@ -2,7 +2,7 @@
 
 
 //resets and shows dialog
-import {login} from "./api.js";
+import {login, registerUser} from "./api.js";
 
 function showDialog(event) {
   console.log('showDialog');
@@ -121,18 +121,31 @@ function navigationButtonEvent(event) {
 
 
 async function loginFormEvent(event) {
+  event.preventDefault();
   console.log('loginFormEvent');
-  const username = event.target.value.username;
-  const password = event.target.value.password;
+  const username = event.target.username.value.valueOf();
+  const password = event.target.password.value.valueOf();
+
+  console.log(username, password); //TODO: remove
   await login(username, password);
 }
 
 async function registerFormEvent(event) {
-  console.log('loginFormEvent');
-  const username = event.target.value.username;
-  const password = event.target.value.password;
-  const email = event.target.value.email;
-  await register(username, password, email);
+  event.preventDefault();
+  console.log('registerFormEvent');
+  const username = event.target.username.value;
+  const password1 = event.target.password1.value.valueOf();
+  const password2 = event.target.password2.value;
+  const email = event.target.email.value;
+
+  console.log(username, password1, password2, email); //TODO: remove
+
+  if (password1 === password2) {
+    await registerUser(username, password1, email);
+  } else {
+    alert("Passwords don't match.");
+  }
+
 }
 
 

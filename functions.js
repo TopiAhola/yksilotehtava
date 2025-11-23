@@ -6,6 +6,8 @@ import {
   closeDialog
 } from './eventhandlers.js';
 
+import {restaurants} from './main.js'
+
 
 const handleAutoLogin = async () => {
   try {
@@ -30,10 +32,12 @@ const handleAutoLogin = async () => {
 
     } else {
       console.log('No token');
+      return null;
     }
 
   } catch (e) {
     console.log(e.message);
+    return null;
   }
 };
 
@@ -44,7 +48,22 @@ const handleAutoLogin = async () => {
  */
 function setUser(user) {
   localStorage.setItem('user', JSON.stringify(user));
-  // setProfileView(user); //TODO: update document with user info
+
+  //update users favourite restaurant
+  restaurants.then(
+    (restaurants) => {
+      setFavouriteRestaurant(user, restaurants);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+
+  //update profile view element
+  const profileArea = document.querySelector('#profile-area');
+  profileArea.innerHTML = '';
+
+
 }
 
 
@@ -415,20 +434,26 @@ async function setNearestRestaurant(userLocation, restaurants) {
  * @param restaurants
  */
 async function setFavouriteRestaurant(user, restaurants) {
-  console.log('setFavouriteRestaurant');
-  console.log(user, restaurants);
   try {
-    if (user !== null) {
-      const favRestaurantId = user.favouriteRestaurant; //TODO: pitääkö olla numero??
-      const favRestaurant = restaurants.find((r) => r._id === favRestaurantId);
+    console.log('setFavouriteRestaurant');
 
-      if (user && (favRestaurant === undefined)) {
+    if (user !== null && user) {
+      console.log('user is not null in setFavouriteRestaurant')
+
+      if (user && (user.favouriteRestaurant === undefined)) {
         //user doesn't have a favourite restaurant
         console.log('favourite restaurant not found');
         document.querySelector('#favourite-restaurant-home').innerHTML = 'Favourite a restaurant and it will show here!';
         document.querySelector('#favourite-restaurant-list').innerHTML = 'Favourite a restaurant and it will show here!';
 
-      } else if (user && (favRestaurant !== undefined)) {
+      } else if (user && (user.favouriteRestaurant !== undefined)) {
+        //user has a favourite restaurant
+        console.log('user has favourite restaurant');
+
+        //get restaurant
+        const favRestaurantId = user.favouriteRestaurant;
+        const favRestaurant = restaurants.find((r) => r._id === favRestaurantId);
+
         //show users favourite restaurant
         console.log(user.username + ' favourite restaurant ' + favRestaurant._id);
 
@@ -453,7 +478,7 @@ async function setFavouriteRestaurant(user, restaurants) {
 
     } else {
       //user is null
-      console.log('user not logged in');
+      console.log('user is null in setFavouriteRestaurant');
       document.querySelector('#favourite-restaurant-home').innerHTML = 'Login to see your favourite restaurant.';
       document.querySelector('#favourite-restaurant-list').innerHTML = 'Login to see your favourite restaurant.';
     }

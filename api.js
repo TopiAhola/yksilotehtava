@@ -66,9 +66,9 @@ async function updateUser(user, token) {
   const url = '/api/v1/users';
   const options = {
     method: "PUT",
-    contentType: "application/json",
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
     },
     body: user
   }
@@ -123,8 +123,9 @@ async function login(username, password) {
     const loginUrl = "/api/v1/auth/login";
     const options = {
       method: "POST",
-      contentType: "application/json",
-      headers: {},
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
           "username": username,
           "password": password
@@ -137,7 +138,7 @@ async function login(username, password) {
     let response = await fetch(baseUrl + loginUrl, options);
     console.log(response);
 
-    if (response.status === 200) {
+    if (response.ok) {
       let responseJson = await response.json();
       console.log(responseJson.message);
 
@@ -147,9 +148,13 @@ async function login(username, password) {
       //update user
       setUser(responseJson["data"]);
 
+    } else if (response.status === 401) {
+      console.log(response.status + 'error in login');
+      alert('Wrong username or password');
+
     } else {
-      console.log('error in login');
-      alert(response.message);
+      console.log(response.status);
+      alert('Error in login.');
     }
 
   } catch (error) {
@@ -173,19 +178,20 @@ async function login(username, password) {
 * */
 
 /**
- *
+ * Register a user
  * @param username
  * @param password
  * @param email
  * @returns {Promise<void>}
  */
-async function register(username, password, email) {
+async function registerUser(username, password, email) {
   try {
     const registerUrl = "/api/v1/users";
     const options = {
       method: "POST",
-      contentType: "application/json",
-      headers: {},
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
           "username": username,
           "password": password,
@@ -199,7 +205,7 @@ async function register(username, password, email) {
     let response = await fetch(baseUrl + registerUrl, options);
     console.log(response);
 
-    if (response.status === 200) {
+    if (response.ok) {
       let responseJson = await response.json();
       console.log(responseJson.message);
 
@@ -318,7 +324,9 @@ export {
   updateUser,
   getUser,
   login,
+  registerUser,
   getRestaurants,
   getDailyMenu,
   getWeeklyMenu
+
 };

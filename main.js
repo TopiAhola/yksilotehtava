@@ -34,9 +34,6 @@ let restaurants = getRestaurants();
 Promise.all([user, userLocation, restaurants])
   .then(([user, userLocation, restaurants]) => {
 
-      //set user
-      setUser(user)
-
       //updates nearest restaurant element, null location uses default element
       setNearestRestaurant(userLocation, restaurants);
 
@@ -54,6 +51,7 @@ Promise.all([user, userLocation, restaurants])
     }
   );
 
+export {restaurants};
 
 
 
