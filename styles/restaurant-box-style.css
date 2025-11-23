@@ -26,13 +26,14 @@
 
 
 .favourite-restaurant {
-  background-color: #eb8a90;
+  background-color: red;
   border-radius: 10px 10px 10px 10px;
   padding: 10px;
+  margin: 20px 10px 10px 10px;
 }
 
 .favourite-restaurant h3 {
-  color: #af696d;
+  color: red;
 }
 
 .favourite-menu {
