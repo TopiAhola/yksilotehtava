@@ -1,6 +1,7 @@
 'use strict';
 
 import restaurantsPlaceholder from "./placeholder.js";
+import {handleAutoLogin, setUser} from "./functions.js";
 
 /**
  * URL: https://media2.edu.metropolia.fi/restaurant
@@ -112,33 +113,44 @@ async function deleteUser(user, token) {
 
 
 /**
- *
+ * Logs user in. Shows alert if login fails
  * @param username
  * @param password
  * @returns {Promise<void>}
  */
 async function login(username, password) {
-  const loginUrl = "/api/v1/auth/login";
-  const options = {
-    method: "POST",
-    contentType: "application/json",
-    headers: {},
-    body: JSON.stringify({
-        "username": username,
-        "password": password
-      }
-    )
-  };
-
-  console.log('login: ' + baseUrl + loginUrl);
-  console.log(options);
   try {
+    const loginUrl = "/api/v1/auth/login";
+    const options = {
+      method: "POST",
+      contentType: "application/json",
+      headers: {},
+      body: JSON.stringify({
+          "username": username,
+          "password": password
+        }
+      )
+    };
+    console.log('login: ' + baseUrl + loginUrl);
+    console.log(options);
+
     let response = await fetch(baseUrl + loginUrl, options);
     console.log(response);
 
-    let responseJson = await response.json();
-    console.log(responseJson.message);
-    localStorage.setItem('token', responseJson.token);
+    if (response.status === 200) {
+      let responseJson = await response.json();
+      console.log(responseJson.message);
+
+      //set token to storage
+      localStorage.setItem('token', responseJson["token"]);
+
+      //update user
+      setUser(responseJson["data"]);
+
+    } else {
+      console.log('error in login');
+      alert(response.message);
+    }
 
   } catch (error) {
     console.log(error);
@@ -159,6 +171,48 @@ async function login(username, password) {
   }
 }
 * */
+
+/**
+ *
+ * @param username
+ * @param password
+ * @param email
+ * @returns {Promise<void>}
+ */
+async function register(username, password, email) {
+  try {
+    const registerUrl = "/api/v1/users";
+    const options = {
+      method: "POST",
+      contentType: "application/json",
+      headers: {},
+      body: JSON.stringify({
+          "username": username,
+          "password": password,
+          "email": email
+        }
+      )
+    };
+    console.log('register: ' + baseUrl + registerUrl);
+    console.log(options);
+
+    let response = await fetch(baseUrl + registerUrl, options);
+    console.log(response);
+
+    if (response.status === 200) {
+      let responseJson = await response.json();
+      console.log(responseJson.message);
+
+    } else {
+      console.log(response.status + 'error in register');
+      alert(response.message);
+    }
+
+  } catch (error) {
+    console.log('unknown error in register');
+    console.log(error);
+  }
+}
 
 
 /////////////////////////////////////////////////////////

@@ -2,6 +2,8 @@
 
 
 //resets and shows dialog
+import {login} from "./api.js";
+
 function showDialog(event) {
   console.log('showDialog');
 
@@ -114,17 +116,44 @@ function navigationButtonEvent(event) {
 }
 
 
+////////////////////////////////////////////////////////
+//login & register from events
+
+
+async function loginFormEvent(event) {
+  console.log('loginFormEvent');
+  const username = event.target.value.username;
+  const password = event.target.value.password;
+  await login(username, password);
+}
+
+async function registerFormEvent(event) {
+  console.log('loginFormEvent');
+  const username = event.target.value.username;
+  const password = event.target.value.password;
+  const email = event.target.value.email;
+  await register(username, password, email);
+}
+
+
 /**
  * Sets event handlers for static elements
  */
 function setEventHandlers() {
   console.log('setEventHandlers');
+
   //navbar
   document.querySelector('#homeNavigationButton').addEventListener('click', navigationButtonEvent);
   document.querySelector('#listNavigationButton').addEventListener('click', navigationButtonEvent);
   document.querySelector('#profileNavigationButton').addEventListener('click', navigationButtonEvent);
   document.querySelector('#loginNavigationButton').addEventListener('click', navigationButtonEvent);
 
+
+  //login form
+  document.querySelector('#login-form').addEventListener('submit', loginFormEvent);
+
+  //register form
+  document.querySelector('#register-form').addEventListener('submit', registerFormEvent);
 
 }
 

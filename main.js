@@ -47,7 +47,7 @@ Promise.all([userLocation, restaurants])
       drawMap(uLocation, rest);
 
       //updates nearest restaurant element, null location uses default element
-      setNearestRestaurant(ulocation, rest);
+      setNearestRestaurant(uLocation, rest);
 
     },
     (error) => {

@@ -130,7 +130,9 @@
 
     <div id="login-view" class="view" style="display: none">
       login view...
+
       <div id="login-area">
+        login area...
         <form id="login-form">
           <input type="text" name="username" placeholder="Username" required>
           <input type="password" name="password" placeholder="Password"
@@ -140,21 +142,20 @@
       </div>
 
 
-      <modal id="register-modal" show-modal>
-        register modal...
-        <div id="register-area">
-          <form id="register-form" onsubmit="event.preventDefault();">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password1" placeholder="Password"
-                   required>
-            <input type="password" name="password2"
-                   placeholder="Repeat password"
-                   required>
-            <input type="submit" value="Register">
-          </form>
-        </div>
+      <div id="register-area">
+        register area...
+        <form id="register-form">
+          <input type="text" name="username" placeholder="Username" required>
+          <input type="password" name="password1" placeholder="Password"
+                 required>
+          <input type="password" name="password2"
+                 placeholder="Repeat password"
+                 required>
+          <input type="email" name="email" placeholder="email" required>
+          <input type="submit" value="Register">
+        </form>
+      </div>
 
-      </modal>
 
     </div>
   </main>
